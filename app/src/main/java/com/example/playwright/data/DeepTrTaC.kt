@@ -1,0 +1,191 @@
+package com.example.playwright.data
+
+// Tamil (1): deep dives + extra quizzes, part C (matches DeepC.kt). Code blocks are C("title"); code comes from English.
+
+val deepTaC: Map<String, ExtraTr> = mapOf(
+    "config" to ExtraTr(
+        deep = listOf(
+            H("நீங்கள் அதிகம் தொடப்போகும் settings"),
+            Table(
+                listOf("Setting", "நோக்கம்"),
+                listOf(
+                    listOf("`testDir`", "Specs இருக்கும் இடம்"),
+                    listOf("`fullyParallel`", "ஒரே file-இல் உள்ள tests-ஐயும் parallel-ஆக ஓட்டு"),
+                    listOf("`forbidOnly`", "test.only விடப்பட்டிருந்தால் fail செய்"),
+                    listOf("`retries`", "Failures-ஐ retry செய் (எ.கா. CI-இல் 2, local-இல் 0)"),
+                    listOf("`workers`", "Parallel processes"),
+                    listOf("`use.viewport`", "Window அளவு"),
+                    listOf("`use.locale / timezoneId`", "மற்ற பிராந்தியங்களைச் சோதிக்க"),
+                    listOf("`use.ignoreHTTPSErrors`", "மோசமான certificates-ஐ ஏற்றுக்கொள்"),
+                    listOf("`webServer`", "Tests-க்கு முன் உங்கள் app-ஐத் தொடங்கு"),
+                ),
+            ),
+            H("CI vs local-க்கு வெவ்வேறு மதிப்புகள்"),
+            C("process.env.CI"),
+            H("உங்கள் app-ஐ தானாகத் தொடங்குதல்"),
+            C("webServer"),
+            H("ஒரு file அல்லது describe அளவில் override"),
+            C("test.use"),
+            Tip("`BASE_URL`-ஐ மட்டும் மாற்றி, அதே suite-ஐ staging மற்றும் prod-க்கு எதிராக ஓட்டலாம்: `BASE_URL=https://staging.x.com npx playwright test`."),
+        ),
+        quiz = listOf(
+            Quiz("`forbidOnly` எதிலிருந்து பாதுகாக்கிறது?", listOf("மறந்துபோன test.only எல்லாவற்றையும் தவிர்ப்பதிலிருந்து", "மெதுவான tests", "விடுபட்ட awaits"), 0, "ஒரே ஒரு test-ஐ அமைதியாக ஓட்டுவதற்குப் பதில் run fail ஆகும்."),
+            Quiz("`reuseExistingServer` என்ன செய்கிறது?", listOf("ஏற்கனவே ஓடிக்கொண்டிருக்கும் server-ஐப் பயன்படுத்துகிறது", "Server-ஐ restart செய்கிறது", "Server-ஐ mock செய்கிறது"), 0, "Local-இல் startup நேரத்தை மிச்சப்படுத்தும்."),
+        ),
+    ),
+    "pom" to ExtraTr(
+        deep = listOf(
+            H("இன்னும் முழுமையான, நிஜமான Page Object"),
+            C("pages/CartPage.ts"),
+            H("கட்டை விரல் விதிகள்"),
+            Table(
+                listOf("செய்யுங்கள்", "செய்யாதீர்கள்"),
+                listOf(
+                    listOf("Actions-ஐ வெளிப்படுத்துங்கள் (`login`, `remove`)", "எல்லா இடங்களிலும் raw clicks-ஐ வெளிப்படுத்துவது"),
+                    listOf("Tests assert செய்ய locators-ஐத் திருப்புங்கள்", "எல்லா asserts-ஐயும் page classes-க்குள் மறைப்பது"),
+                    listOf("ஒரு page அல்லது component-க்கு ஒரு class", "ஒரே பெரிய Utils class"),
+                    listOf("Navigation-க்குப் பிறகு அடுத்த page object-ஐத் திருப்புங்கள்", "Hard sleeps பயன்படுத்துவது"),
+                ),
+            ),
+            H("Components"),
+            P("Headers, menus, modals பல pages-இல் வரும். அவற்றைத் தனித்தனி சிறிய classes ஆக்கி இணையுங்கள்: `this.header = new HeaderComponent(page)`."),
+            C("இணைத்தல்"),
+            Tip("Navigation நடக்கும்போது method-இலிருந்து இன்னொரு page object-ஐத் திருப்புங்கள்: `async login(): Promise<DashboardPage>`. அப்போது tests ஒரு கதை போலப் படிக்கும்."),
+            Warn("Page Object கட்டாயமில்லை. சிறிய suite-க்கு சில helper functions போதும். Locators திரும்பத் திரும்ப வருவதைக் கண்டால் POM-ஐ அறிமுகப்படுத்துங்கள்."),
+        ),
+        quiz = listOf(
+            Quiz("Assertions பெரும்பாலும் எங்கே இருக்க வேண்டும்?", listOf("Tests-இல்", "Page classes-இல்", "Config-இல்"), 0, "Page objects, page-ஐ விவரிக்கும்; எது சரி என்பதை tests முடிவு செய்யும்."),
+            Quiz("Component object என்றால் என்ன?", listOf("Header அல்லது modal போன்ற மறுபயன்பாட்டுப் பகுதி", "ஒரு React class", "ஒரு fixture"), 0, "பல pages பகிரும் மறுபயன்பாட்டுப் பகுதிகள்."),
+        ),
+    ),
+    "fixtures" to ExtraTr(
+        deep = listOf(
+            H("Data மற்றும் setup உடன் fixtures"),
+            C("பல fixtures ஒன்றாக"),
+            H("Auto fixtures மற்றும் teardown"),
+            C("auto: true"),
+            H("Worker-scoped fixtures"),
+            P("இயல்பாக ஒவ்வொரு test-க்கும் ஒரு fixture உருவாக்கப்படும். அதை `{ scope: 'worker' }` என்று குறித்தால், ஒரு worker process-க்கு ஒருமுறை மட்டும் உருவாகும்; எ.கா. விலையுயர்ந்த API token-க்கு."),
+            C("scope"),
+            Tip("Fixtures, `BaseTest` inheritance, `@BeforeMethod`, Spring-style dependency injection ஆகிய மூன்றையும் ஒரே கருத்தால் மாற்றுகின்றன."),
+            Warn("வேறு fixtures தேவையில்லாதபோது வரும் விசித்திரமான `async ({}, use)`-ஐக் கவனியுங்கள். காலி braces கட்டாயம்."),
+        ),
+        quiz = listOf(
+            Quiz("`{ auto: true }` என்ன செய்கிறது?", listOf("ஒவ்வொரு test-க்கும் fixture-ஐத் தானாக ஓட்டுகிறது", "Bugs-ஐத் தானாகச் சரிசெய்கிறது", "வேகமாக்குகிறது"), 0, "Test-இல் அதைக் கேட்க வேண்டியதில்லை."),
+            Quiz("Worker-scoped fixtures உருவாக்கப்படுவது...", listOf("ஒரு worker-க்கு ஒருமுறை", "ஒவ்வொரு test-க்கும்", "ஒருபோதும் இல்லை"), 0, "விலையுயர்ந்த setup-க்கு மிகவும் நல்லது."),
+        ),
+    ),
+    "data" to ExtraTr(
+        deep = listOf(
+            H("JSON test data"),
+            C("data/users.json + loader"),
+            P("JSON imports-க்கு `tsconfig.json`-இல் `resolveJsonModule`-ஐ enable செய்யுங்கள்."),
+            H("CSV மற்றும் Excel"),
+            C("CSV படித்தல்"),
+            H("dotenv உடன் .env files"),
+            C("Secrets-ஐ code-இலிருந்து விலக்குதல்"),
+            H("Random data"),
+            C("தனித்துவமான emails"),
+            Tip("Parallel-ஆக ஓடும்போது tests மோதாமல் இருக்க, ஒவ்வொரு run-க்கும் test data-ஐத் தனித்துவமாக்குங்கள் (timestamp அல்லது faker)."),
+            Warn("உண்மையான passwords அல்லது tokens-ஐ specs-இல் hard-code செய்யாதீர்கள். Local-இல் env vars, CI-இல் secrets பயன்படுத்துங்கள்."),
+        ),
+        quiz = listOf(
+            Quiz("`process.env.X!` இல் உள்ள ஆச்சரியக்குறி என்ன பொருள்?", listOf("நம்புங்கள், இது define ஆகியுள்ளது", "இல்லாவிட்டால் throw செய்", "அதை delete செய்"), 0, "TypeScript-இன் 'undefined ஆக இருக்கலாம்' எச்சரிக்கையை அது அடக்குகிறது."),
+            Quiz("Test data-ஐ ஏன் தனித்துவமாக்க வேண்டும்?", listOf("இல்லாவிட்டால் parallel tests மோதலாம்", "அது அழகாகத் தெரியும்", "Playwright கட்டாயப்படுத்துகிறது"), 0, "பகிரப்பட்ட data, flaky parallel runs-ஐ உருவாக்கும்."),
+        ),
+    ),
+    "api" to ExtraTr(
+        deep = listOf(
+            H("முழு CRUD எடுத்துக்காட்டு"),
+            C("GET, POST, PUT, DELETE"),
+            H("Headers, auth மற்றும் query"),
+            C("Options"),
+            H("Config மூலம் API-ஐப் பகிர்தல்"),
+            C("எல்லா requests-க்கும் baseURL + headers"),
+            H("Hybrid tests: API setup, UI சோதனை"),
+            C("Data-ஐ வேகமாக உருவாக்கி, UI-இல் சரிபார்"),
+            Tip("பிழையில் response body-உடன் படிக்கக்கூடிய status சோதனைக்கு `await expect(response).toBeOK()` பயன்படுத்துங்கள்."),
+            Warn("Selenium + RestAssured-க்கு இரண்டு toolchains இருந்தன. இங்கே `request` fixture-க்குப் பதில் `page.request` பயன்படுத்தினால், API calls-உம் browser-உம் cookies-ஐப் பகிரலாம்."),
+        ),
+        quiz = listOf(
+            Quiz("Query string அனுப்பும் option எது?", listOf("params", "query", "search"), 0, "`params: { a: 1 }` என்பது ?a=1 ஆகும்."),
+            Quiz("`page.request` vs `request` fixture?", listOf("page.request, page-இன் cookies-ஐப் பகிரும்", "வித்தியாசம் இல்லை", "request மெதுவானது"), 0, "API மூலம் login செய்து UI-இல் தொடர நல்லது."),
+        ),
+    ),
+    "mock" to ExtraTr(
+        deep = listOf(
+            H("உண்மையான response-ஐ மாற்றுதல்"),
+            C("Fetch செய்து பிறகு மாற்று"),
+            H("மெதுவான மற்றும் பழுதான servers-ஐ simulate செய்தல்"),
+            C("Errors மற்றும் delays"),
+            H("Requests-ஐ மாற்றாமல் உளவு பார்த்தல்"),
+            C("Page என்ன அனுப்பியது என்று assert செய்"),
+            H("HAR file-இலிருந்து mock"),
+            C("பதிவு செய்து மீண்டும் இயக்கு"),
+            Tip("Mocking மூலம், உண்மையில் தூண்டுவது கடினமான 'server 500 தந்தால் என்ன?' நிலைகளைச் சோதிக்கலாம்."),
+            Warn("Mocks உண்மையான API-இலிருந்து விலகிப்போகலாம். சில உண்மையான end-to-end tests-ஐயும் வைத்திருங்கள்."),
+        ),
+        quiz = listOf(
+            Quiz("`route.continue()` என்ன செய்கிறது?", listOf("உண்மையான request-ஐ அனுமதிக்கிறது", "அதை fail செய்கிறது", "பதிலைப் போலியாக்குகிறது"), 0, "விருப்பப்பட்டால் மாற்றிய headers அல்லது body-உடன்."),
+            Quiz("சில tests-இல் images-ஐ ஏன் block செய்ய வேண்டும்?", listOf("வேகமாகவும் நிலையாகவும் இருக்கும்", "கட்டாயம்", "Images load ஆகாது"), 0, "குறைவான இரைச்சல், குறைவான bandwidth."),
+        ),
+    ),
+    "auth" to ExtraTr(
+        deep = listOf(
+            H("முழு setup, படிப்படியாக"),
+            P("1) ஒரு setup file login செய்து state-ஐச் சேமிக்கும். 2) Config ஒரு 'setup' project உருவாக்கி, மற்ற projects-ஐ அதைச் சார்ந்திருக்கச் செய்யும். 3) Tests ஏற்கனவே login ஆன நிலையில் தொடங்கும்."),
+            C("playwright.config.ts"),
+            H("வெவ்வேறு roles"),
+            C("admin மற்றும் user"),
+            H("வேகமாக: API மூலம் login"),
+            C("UI இல்லவே இல்லை"),
+            H("storageState-இல் என்ன இருக்கிறது"),
+            P("ஒவ்வொரு origin-க்கும் cookies மற்றும் `localStorage`. Session storage சேர்க்கப்படவில்லை. உங்கள் app tokens-ஐ sessionStorage-இல் வைத்தால், `page.addInitScript` மூலம் மீட்டெடுங்கள்."),
+            Tip("`.auth/`-ஐ `.gitignore`-இல் சேருங்கள். அந்த file கிட்டத்தட்ட ஒரு password."),
+            Warn("நீண்ட run-இல் session காலாவதியானால், tests 401 உடன் fail ஆகத் தொடங்கும். ஒவ்வொரு run-இலும் file-ஐ புதிதாக உருவாக்குங்கள் (setup project செய்வது அதுதான்)."),
+        ),
+        quiz = listOf(
+            Quiz("'chromium' project-ஐ 'setup'-க்குக் காத்திருக்கச் செய்வது எது?", listOf("dependencies: ['setup']", "array-இன் வரிசை", "retries"), 0, "dependencies, setup முதலில் ஓடுவதை உறுதி செய்கிறது."),
+            Quiz("sessionStorage, storageState-இல் சேமிக்கப்படுமா?", listOf("இல்லை", "ஆம்", "Firefox-இல் மட்டும்"), 0, "Cookies மற்றும் localStorage மட்டுமே சேமிக்கப்படும்."),
+        ),
+    ),
+    "codegen-shots" to ExtraTr(
+        deep = listOf(
+            H("Codegen-இன் சக்திவாய்ந்த நகர்வுகள்"),
+            C("பயனுள்ள flags"),
+            P("Codegen window-இல் assertions உருவாக்க 'Assert visibility / text / value' buttons-ஐயும், பதிவு செய்யாமல் locators-ஐக் கண்டுபிடிக்க 'Pick locator'-ஐயும் பயன்படுத்துங்கள்."),
+            H("Screenshots ஆழமாக"),
+            C("Variations"),
+            H("Visual regression testing"),
+            C("toHaveScreenshot"),
+            Tip("பார்வை மாற்றத்தைச் சரிபார்த்த பிறகு, `npx playwright test --update-snapshots` மூலம் snapshots-ஐ வேண்டுமென்றே update செய்யுங்கள்."),
+            Tip("தேதிகள், விளம்பரங்கள், random content ஆகியவற்றை mask செய்து, animations-ஐ disable செய்யுங்கள். இல்லாவிட்டால் visual tests இரைச்சலாக இருக்கும்."),
+            Warn("Baselines ஒவ்வொரு OS மற்றும் browser-க்கும் தனி (`home-chromium-win32.png`). அவற்றை CI ஓடும் அதே OS-இல், முடிந்தால் official Docker image-க்குள் உருவாக்குங்கள்."),
+        ),
+        quiz = listOf(
+            Quiz("Visual tests-இல் மாறிக்கொண்டே இருக்கும் element-ஐ எப்படி மறைப்பது?", listOf("mask", "delete", "skip"), 0, "mask, இரண்டு images-இலும் அந்தப் பகுதிகளை மூடி வரையும்."),
+            Quiz("OS-களுக்கு இடையே snapshots ஏன் வேறுபடுகின்றன?", listOf("Fonts மற்றும் rendering வேறுபடும்", "Playwright bug", "File அளவு"), 0, "அதனால் CI ஓடும் இடத்திலேயே baselines-ஐ உருவாக்குங்கள்."),
+        ),
+    ),
+    "parallel-ci" to ExtraTr(
+        deep = listOf(
+            H("Parallelism எப்படி வேலை செய்கிறது"),
+            P("Playwright N workers (processes) தொடங்கும். ஒவ்வொரு worker-உம் முழு test files-ஐ ஓட்டும். `fullyParallel: true` இருந்தால், ஒரு file-க்குள் உள்ள tests-உம் workers-க்கு இடையே பகிரப்படும். Tests ஒரு worker-இன் browser-ஐ ஒருபோதும் பகிராது: ஒவ்வொரு test-க்கும் தனி context கிடைக்கும்."),
+            C("கட்டுப்படுத்துதல்"),
+            Warn("`serial` mode: ஒரு test fail ஆனால், அந்த group-இல் மீதமுள்ளவை தவிர்க்கப்படும். குறைவாகப் பயன்படுத்துங்கள். சார்பற்ற tests சிறந்தவை."),
+            H("Tags, நவீன வழி"),
+            C("Tags"),
+            H("GitHub Actions workflow"),
+            C("pw.yml"),
+            H("Machines முழுவதும் sharding"),
+            C("Suite-ஐ பிரித்தல்"),
+            H("Docker"),
+            C("Official image-இல் எல்லாம் உள்ளது"),
+            Tip("Docker image tag-ஐ நீங்கள் நிறுவிய `@playwright/test` version-உடன் பொருத்துங்கள்."),
+        ),
+        quiz = listOf(
+            Quiz("Shard என்றால் என்ன?", listOf("ஒரு machine-இல் ஓடும் suite-இன் ஒரு துண்டு", "ஒரு browser", "ஒரு report"), 0, "Sharding, tests-ஐ CI machines இடையே பிரிக்கும்."),
+            Quiz("Report-ஐ `if: always()` உடன் ஏன் upload செய்ய வேண்டும்?", listOf("Tests fail ஆனாலும் அது கிடைக்க", "இடத்தை மிச்சப்படுத்த", "கட்டாயம்"), 0, "Failures நேரத்தில்தான் உங்களுக்கு report தேவை."),
+        ),
+    ),
+)

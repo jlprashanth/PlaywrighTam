@@ -1,0 +1,191 @@
+package com.example.playwright.data
+
+// Tenglish (4 = Telugu in English letters): deep dives + extra quizzes, part C (matches DeepC.kt). Code blocks are C("title").
+
+val deepTnC: Map<String, ExtraTr> = mapOf(
+    "config" to ExtraTr(
+        deep = listOf(
+            H("Meeru ekkuvaga taake settings"),
+            Table(
+                listOf("Setting", "Uddesham"),
+                listOf(
+                    listOf("`testDir`", "Specs unde chotu"),
+                    listOf("`fullyParallel`", "Oke file lo unna tests ni kuda parallel ga nadapu"),
+                    listOf("`forbidOnly`", "test.only vadileste fail cheyyi"),
+                    listOf("`retries`", "Failures ni retry cheyyi (uda. CI lo 2, local lo 0)"),
+                    listOf("`workers`", "Parallel processes"),
+                    listOf("`use.viewport`", "Window size"),
+                    listOf("`use.locale / timezoneId`", "Itara regions ni test cheyadaniki"),
+                    listOf("`use.ignoreHTTPSErrors`", "Chedda certificates ni accept cheyyi"),
+                    listOf("`webServer`", "Tests ki mundu mee app ni start cheyyi"),
+                ),
+            ),
+            H("CI vs local ki vere values"),
+            C("process.env.CI"),
+            H("Mee app ni automatic ga start cheyadam"),
+            C("webServer"),
+            H("Per-file mariyu per-describe overrides"),
+            C("test.use"),
+            Tip("`BASE_URL` ni matrame maarchi, ade suite ni staging mariyu prod meeda nadapochu: `BASE_URL=https://staging.x.com npx playwright test`."),
+        ),
+        quiz = listOf(
+            Quiz("`forbidOnly` deni nundi kaapadutundi?", listOf("Marchipoyina test.only annintini skip cheyadam nundi", "Slow tests", "Marchipoyina awaits"), 0, "Oke test ni nishabdanga nadapadaniki badulu run fail avutundi."),
+            Quiz("`reuseExistingServer` em chestundi?", listOf("Ippatike nadustunna server ni vaadutundi", "Server ni restart chestundi", "Server ni mock chestundi"), 0, "Local lo startup samayanni aada chestundi."),
+        ),
+    ),
+    "pom" to ExtraTr(
+        deep = listOf(
+            H("Inka purti, realistic Page Object"),
+            C("pages/CartPage.ts"),
+            H("Rules of thumb"),
+            Table(
+                listOf("Cheyandi", "Cheyakandi"),
+                listOf(
+                    listOf("Actions ni expose cheyandi (`login`, `remove`)", "Anni chotla raw clicks ni expose cheyadam"),
+                    listOf("Tests assert cheyadaniki locators ni return cheyandi", "Anni asserts ni page classes lo daachadam"),
+                    listOf("Oka page leda component ki oka class", "Oka pedda Utils class"),
+                    listOf("Navigation tarvata tadupari page object ni return cheyandi", "Hard sleeps vaadatam"),
+                ),
+            ),
+            H("Components"),
+            P("Headers, menus, modals chala pages lo vastayi. Vaatini sontha chinna classes ga chesi compose cheyandi: `this.header = new HeaderComponent(page)`."),
+            C("Compose"),
+            Tip("Navigation jariginappudu method nundi inko page object ni return cheyandi: `async login(): Promise<DashboardPage>`. Appudu tests oka katha laaga chadavabadatayi."),
+            Warn("Page Object tappanisari kaadu. Chinna suite ki konni helper functions chaalu. Locators malli malli ravadam chusinappudu POM ni introduce cheyandi."),
+        ),
+        quiz = listOf(
+            Quiz("Assertions ekkuvaga ekkada undali?", listOf("Tests lo", "Page classes lo", "Config lo"), 0, "Page objects page ni describe chestayi; edi sarainado tests nirnayistayi."),
+            Quiz("Component object ante enti?", listOf("Header leda modal lanti reusable bhagam", "Oka React class", "Oka fixture"), 0, "Chala pages share chesukune reusable parts."),
+        ),
+    ),
+    "fixtures" to ExtraTr(
+        deep = listOf(
+            H("Data mariyu setup tho fixtures"),
+            C("Chala fixtures kalipi"),
+            H("Auto fixtures mariyu teardown"),
+            C("auto: true"),
+            H("Worker-scoped fixtures"),
+            P("Default ga prati test ki oka fixture create avutundi. Daanni `{ scope: 'worker' }` ani mark chesthe, oka worker process ki okkasari matrame create avutundi; uda. kharidaina API token ki."),
+            C("scope"),
+            Tip("Fixtures, `BaseTest` inheritance, `@BeforeMethod`, Spring-style dependency injection ee moodintini oke concept tho maarustayi."),
+            Warn("Vere fixtures avasaram lenappudu vachche vichitramaina `async ({}, use)` ni gamanimchandi. Khali braces tappanisari."),
+        ),
+        quiz = listOf(
+            Quiz("`{ auto: true }` em chestundi?", listOf("Prati test ki fixture ni automatic ga nadputundi", "Bugs ni automatic ga fix chestundi", "Fast chestundi"), 0, "Test lo daanni adagalsina avasaram ledu."),
+            Quiz("Worker-scoped fixtures create ayyedi...", listOf("Oka worker ki okkasari", "Prati test ki", "Eppudu kaadu"), 0, "Kharidaina setup ki chala manchidi."),
+        ),
+    ),
+    "data" to ExtraTr(
+        deep = listOf(
+            H("JSON test data"),
+            C("data/users.json + loader"),
+            P("JSON imports kosam `tsconfig.json` lo `resolveJsonModule` ni enable cheyandi."),
+            H("CSV mariyu Excel"),
+            C("CSV chadavadam"),
+            H("dotenv tho .env files"),
+            C("Secrets ni code nundi duranga unchandi"),
+            H("Random data"),
+            C("Unique emails"),
+            Tip("Parallel ga nadichetappudu tests dheekonakunda, prati run ki test data ni unique ga cheyandi (timestamp leda faker)."),
+            Warn("Nijamaina passwords leda tokens ni specs lo hard-code cheyakandi. Local lo env vars, CI lo secrets vaadandi."),
+        ),
+        quiz = listOf(
+            Quiz("`process.env.X!` lo unna exclamation artham enti?", listOf("Nannu nammu, idi define ayi undi", "Lekapote throw cheyyi", "Daanni delete cheyyi"), 0, "TypeScript yokka 'undefined ayi undochu' heccharikanu adi aaputundi."),
+            Quiz("Test data ni enduku unique ga cheyali?", listOf("Lekapote parallel tests dheekonavachu", "Andanga kanipistundi", "Playwright demand chestundi"), 0, "Shared data valla flaky parallel runs vastayi."),
+        ),
+    ),
+    "api" to ExtraTr(
+        deep = listOf(
+            H("Purti CRUD example"),
+            C("GET, POST, PUT, DELETE"),
+            H("Headers, auth mariyu query"),
+            C("Options"),
+            H("Config dwara API ni share cheyadam"),
+            C("Anni requests ki baseURL + headers"),
+            H("Hybrid tests: API setup, UI check"),
+            C("Data ni fast ga create chesi, UI lo verify cheyandi"),
+            Tip("Error lo response body tho chadavadaniki sulabhamaina status check kosam `await expect(response).toBeOK()` vaadandi."),
+            Warn("Selenium + RestAssured ki rendu toolchains undevi. Ikkada `request` fixture badulu `page.request` vaadite, API calls, browser cookies ni share chesukogalavu."),
+        ),
+        quiz = listOf(
+            Quiz("Query string pampe option edi?", listOf("params", "query", "search"), 0, "`params: { a: 1 }` ante ?a=1 avutundi."),
+            Quiz("`page.request` vs `request` fixture?", listOf("page.request, page yokka cookies ni share chestundi", "Teda ledu", "request slow"), 0, "API dwara login ayi UI lo konasaganaadaniki manchidi."),
+        ),
+    ),
+    "mock" to ExtraTr(
+        deep = listOf(
+            H("Nijamaina response ni maarchadam"),
+            C("Fetch chesi tarvata maarchu"),
+            H("Slow mariyu failing servers ni simulate cheyadam"),
+            C("Errors mariyu delays"),
+            H("Requests ni maarchakunda gamanimchadam"),
+            C("Page em pampindo assert cheyandi"),
+            H("HAR file nundi mock"),
+            C("Record chesi replay cheyandi"),
+            Tip("Mocking tho, nijanga trigger cheyadam kashtamaina 'server 500 iste emavutundi?' states ni test cheyochu."),
+            Warn("Mocks nijamaina API nundi duram jaragavachu. Konni nijamaina end-to-end tests ni kuda unchandi."),
+        ),
+        quiz = listOf(
+            Quiz("`route.continue()` em chestundi?", listOf("Nijamaina request ni pampanistundi", "Daanni fail chestundi", "Reply ni nakili chestundi"), 0, "Kavalante maarchina headers leda body tho."),
+            Quiz("Konni tests lo images ni enduku block cheyali?", listOf("Fast ga mariyu stable ga untundi", "Tappanisari", "Images load avvavu"), 0, "Takkuva noise, takkuva bandwidth."),
+        ),
+    ),
+    "auth" to ExtraTr(
+        deep = listOf(
+            H("Motham setup, step by step"),
+            P("1) Oka setup file login chesi state ni save chestundi. 2) Config oka 'setup' project ni create chesi, migata projects ni daanipai aadharapadela chestundi. 3) Tests ippatike login ayina sthitilo modalavutayi."),
+            C("playwright.config.ts"),
+            H("Vere roles"),
+            C("admin mariyu user"),
+            H("Fast ga: API dwara login"),
+            C("Asalu UI ledu"),
+            H("storageState lo emundi"),
+            P("Prati origin ki cookies mariyu `localStorage`. Session storage cherchabadadu. Mee app tokens ni sessionStorage lo unchite, `page.addInitScript` tho restore cheyandi."),
+            Tip("`.auth/` ni `.gitignore` lo add cheyandi. Aa file daadapu oka password."),
+            Warn("Podavaina run lo session expire aithe, tests 401 tho fail avvadam modalavutundi. Prati run lo file ni kothaga generate cheyandi (setup project chesedi ade)."),
+        ),
+        quiz = listOf(
+            Quiz("'chromium' project ni 'setup' kosam wait cheyinchedi edi?", listOf("dependencies: ['setup']", "array yokka order", "retries"), 0, "dependencies, setup mundu nadavadanni haami istundi."),
+            Quiz("sessionStorage, storageState lo save avutunda?", listOf("Ledu", "Avunu", "Firefox lo matrame"), 0, "Cookies mariyu localStorage matrame save avutayi."),
+        ),
+    ),
+    "codegen-shots" to ExtraTr(
+        deep = listOf(
+            H("Codegen yokka power moves"),
+            C("Handy flags"),
+            P("Codegen window lo assertions create cheyadaniki 'Assert visibility / text / value' buttons ni, record cheyakunda locators kanugonadaniki 'Pick locator' ni vaadandi."),
+            H("Screenshots in depth"),
+            C("Variations"),
+            H("Visual regression testing"),
+            C("toHaveScreenshot"),
+            Tip("Visual marpunu check chesina tarvata, `npx playwright test --update-snapshots` tho snapshots ni uddeshapoorvakanga update cheyandi."),
+            Tip("Dates, ads, random content ni mask chesi, animations ni disable cheyandi. Lekapote visual tests noisy ga untayi."),
+            Warn("Baselines prati OS mariyu browser ki veru (`home-chromium-win32.png`). Vaatini CI nadiche ade OS lo, veelaite official Docker image lopala generate cheyandi."),
+        ),
+        quiz = listOf(
+            Quiz("Visual tests lo maarutu unde element ni ela daachali?", listOf("mask", "delete", "skip"), 0, "mask rendu images lonu aa pranthalanu kappestundi."),
+            Quiz("OS la madhya snapshots enduku veruga untayi?", listOf("Fonts mariyu rendering veruga untayi", "Playwright bug", "File size"), 0, "Kabatti CI nadiche chote baselines ni generate cheyandi."),
+        ),
+    ),
+    "parallel-ci" to ExtraTr(
+        deep = listOf(
+            H("Parallelism ela pani chestundi"),
+            P("Playwright N workers (processes) ni start chestundi. Prati worker purti test files ni nadputundi. `fullyParallel: true` unte, oka file lopala unna tests kuda workers madhya panchabadatayi. Tests eppudu oka worker yokka browser ni share cheyavu: prati test ki sontha context vastundi."),
+            C("Control cheyadam"),
+            Warn("`serial` mode: oka test fail aithe, aa group lo migatavi skip avutayi. Takkuvaga vaadandi. Independent tests better."),
+            H("Tags, modern margam"),
+            C("Tags"),
+            H("GitHub Actions workflow"),
+            C("pw.yml"),
+            H("Machines antata sharding"),
+            C("Suite ni vibhajinchadam"),
+            H("Docker"),
+            C("Official image lo anni unnayi"),
+            Tip("Docker image tag ni meeru install chesina `@playwright/test` version tho match cheyandi."),
+        ),
+        quiz = listOf(
+            Quiz("Shard ante enti?", listOf("Oka machine lo nadiche suite yokka oka mukka", "Oka browser", "Oka report"), 0, "Sharding tests ni CI machines madhya vibhajistundi."),
+            Quiz("Report ni `if: always()` tho enduku upload cheyali?", listOf("Tests fail ainaa adi dorakadaniki", "Sthalam aada cheyadaniki", "Tappanisari"), 0, "Failures ainappude meeku report kavali."),
+        ),
+    ),
+)

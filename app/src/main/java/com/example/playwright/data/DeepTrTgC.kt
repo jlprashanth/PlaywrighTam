@@ -1,0 +1,191 @@
+package com.example.playwright.data
+
+// Tanglish (2): deep dives + extra quizzes, part C (matches DeepC.kt). Code blocks are C("title"); code comes from English.
+
+val deepTgC: Map<String, ExtraTr> = mapOf(
+    "config" to ExtraTr(
+        deep = listOf(
+            H("Neenga adhigam thodaporadhu settings"),
+            Table(
+                listOf("Setting", "Nokkam"),
+                listOf(
+                    listOf("`testDir`", "Specs irukkura idam"),
+                    listOf("`fullyParallel`", "Oru file-la irukkura tests-aiyum parallel-a odu"),
+                    listOf("`forbidOnly`", "test.only vittu pochchuna fail pannu"),
+                    listOf("`retries`", "Failures-a retry pannu (e.g. CI-la 2, local-la 0)"),
+                    listOf("`workers`", "Parallel processes"),
+                    listOf("`use.viewport`", "Window size"),
+                    listOf("`use.locale / timezoneId`", "Mathha regions-a test panna"),
+                    listOf("`use.ignoreHTTPSErrors`", "Mosamaana certificates-a accept pannu"),
+                    listOf("`webServer`", "Tests-ukku munnaadi ungal app-a start pannu"),
+                ),
+            ),
+            H("CI vs local-ukku vera vera values"),
+            C("process.env.CI"),
+            H("Ungal app-a thaanaave start pannuradhu"),
+            C("webServer"),
+            H("Per-file matrum per-describe overrides"),
+            C("test.use"),
+            Tip("`BASE_URL`-a mattum maathi, adhey suite-a staging matrum prod-ukku ethiraa odalaam: `BASE_URL=https://staging.x.com npx playwright test`."),
+        ),
+        quiz = listOf(
+            Quiz("`forbidOnly` edhula irundhu kaakkudhu?", listOf("Marandhu pona test.only ellaathaiyum skip pannuradhula irundhu", "Slow tests", "Vittu pona awaits"), 0, "Oru test-a mattum amaidhiya odurathukku bathila run fail aagum."),
+            Quiz("`reuseExistingServer` enna pannudhu?", listOf("Already odittu irukkura server-a use pannudhu", "Server-a restart pannudhu", "Server-a mock pannudhu"), 0, "Local-la startup neratha migappaduthum."),
+        ),
+    ),
+    "pom" to ExtraTr(
+        deep = listOf(
+            H("Innum muzhumaiyaana, realistic Page Object"),
+            C("pages/CartPage.ts"),
+            H("Rules of thumb"),
+            Table(
+                listOf("Pannunga", "Pannaadheenga"),
+                listOf(
+                    listOf("Actions-a expose pannunga (`login`, `remove`)", "Ellaa edathulayum raw clicks-a expose pannuradhu"),
+                    listOf("Tests assert panna locators-a return pannunga", "Ellaa asserts-aiyum page classes-kulla maraikkuradhu"),
+                    listOf("Oru page illa component-ukku oru class", "Oru periya Utils class"),
+                    listOf("Navigation-ukku appuram adutha page object-a return pannunga", "Hard sleeps use pannuradhu"),
+                ),
+            ),
+            H("Components"),
+            P("Headers, menus, modals pala pages-la varum. Avatrai thani chinna classes-a aakki compose pannunga: `this.header = new HeaderComponent(page)`."),
+            C("Compose"),
+            Tip("Navigation nadakkumbodhu method-la irundhu innoru page object-a return pannunga: `async login(): Promise<DashboardPage>`. Appo tests oru kadhai maadhiri padikkum."),
+            Warn("Page Object kattaayam illa. Chinna suite-ukku sila helper functions podhum. Locators thirumba thirumba varadhu paatha appuram POM-a introduce pannunga."),
+        ),
+        quiz = listOf(
+            Quiz("Assertions perumbaalum enga irukkanum?", listOf("Tests-la", "Page classes-la", "Config-la"), 0, "Page objects page-a describe pannum; edhu sari-nu tests dhaan mudivu pannum."),
+            Quiz("Component object na enna?", listOf("Header illa modal maadhiri reusable paagam", "Oru React class", "Oru fixture"), 0, "Pala pages share pannura reusable parts."),
+        ),
+    ),
+    "fixtures" to ExtraTr(
+        deep = listOf(
+            H("Data matrum setup-oda fixtures"),
+            C("Pala fixtures onnaa"),
+            H("Auto fixtures matrum teardown"),
+            C("auto: true"),
+            H("Worker-scoped fixtures"),
+            P("Default-a ovvoru test-ukkum oru fixture create aagum. Adhai `{ scope: 'worker' }`nu mark panna, oru worker process-ukku oru thadava mattum create aagum; e.g. vilai uyarndha API token-ukku."),
+            C("scope"),
+            Tip("Fixtures, `BaseTest` inheritance, `@BeforeMethod`, Spring-style dependency injection moonaiyum oru concept-a maathidum."),
+            Warn("Vera fixtures thevai illaadha pothu varra vichithiramaana `async ({}, use)`-a gavanichchukonga. Kaali braces kattaayam."),
+        ),
+        quiz = listOf(
+            Quiz("`{ auto: true }` enna pannum?", listOf("Ovvoru test-ukkum fixture-a thaanaave odum", "Bugs-a thaanaave fix pannum", "Fast-a aakkum"), 0, "Test-la adhai kekka vendiyadhu illa."),
+            Quiz("Worker-scoped fixtures create aaguradhu...", listOf("Oru worker-ukku oru thadava", "Ovvoru test-ukkum", "Eppovum illa"), 0, "Vilai uyarndha setup-ukku semma."),
+        ),
+    ),
+    "data" to ExtraTr(
+        deep = listOf(
+            H("JSON test data"),
+            C("data/users.json + loader"),
+            P("JSON imports-ukku `tsconfig.json`-la `resolveJsonModule`-a enable pannunga."),
+            H("CSV matrum Excel"),
+            C("CSV padikkradhu"),
+            H("dotenv-oda .env files"),
+            C("Secrets-a code-la irundhu veliyae vainga"),
+            H("Random data"),
+            C("Unique emails"),
+            Tip("Parallel-a odumbodhu tests mothaama irukka, ovvoru run-ukkum test data-a unique-a aakkunga (timestamp illa faker)."),
+            Warn("Unmaiyaana passwords illa tokens-a specs-la hard-code pannaadheenga. Local-la env vars, CI-la secrets use pannunga."),
+        ),
+        quiz = listOf(
+            Quiz("`process.env.X!` la irukkura exclamation enna artham?", listOf("Nambunga, idhu define aagi irukku", "Illana throw pannu", "Adhai delete pannu"), 0, "TypeScript-oda 'undefined-aa irukkalaam' warning-a adhu adakkum."),
+            Quiz("Test data-a yen unique-a aakkanum?", listOf("Illana parallel tests mothalaam", "Azhagaa theriyum", "Playwright kattaayappaduthudhu"), 0, "Share panna data flaky parallel runs-a create pannum."),
+        ),
+    ),
+    "api" to ExtraTr(
+        deep = listOf(
+            H("Muzhu CRUD example"),
+            C("GET, POST, PUT, DELETE"),
+            H("Headers, auth matrum query"),
+            C("Options"),
+            H("Config vazhiya API-a share pannuradhu"),
+            C("Ellaa requests-ukkum baseURL + headers"),
+            H("Hybrid tests: API setup, UI check"),
+            C("Data-a fast-a create panni, UI-la verify pannunga"),
+            Tip("Error-la response body-oda padikka easy-aana status check-ukku `await expect(response).toBeOK()` use pannunga."),
+            Warn("Selenium + RestAssured-ukku rendu toolchains irundhuchu. Inga `request` fixture-ukku bathila `page.request` use panna, API calls-um browser-um cookies-a share pannum."),
+        ),
+        quiz = listOf(
+            Quiz("Query string anuppura option edhu?", listOf("params", "query", "search"), 0, "`params: { a: 1 }` na ?a=1 aagum."),
+            Quiz("`page.request` vs `request` fixture?", listOf("page.request page-oda cookies-a share pannum", "Vithyaasam illa", "request slow"), 0, "API vazhiya login panni UI-la thodara nalladhu."),
+        ),
+    ),
+    "mock" to ExtraTr(
+        deep = listOf(
+            H("Unmaiyaana response-a maathuradhu"),
+            C("Fetch panni appuram maathu"),
+            H("Slow matrum failing servers-a simulate pannuradhu"),
+            C("Errors matrum delays"),
+            H("Requests-a maatraama ullukku paarkkuradhu"),
+            C("Page enna anuppuchu-nu assert pannunga"),
+            H("HAR file-la irundhu mock"),
+            C("Record panni replay pannunga"),
+            Tip("Mocking vachchu, unmaiyaave trigger panna kashtamaana 'server 500 thandha enna?' nilaigala test pannalaam."),
+            Warn("Mocks unmaiyaana API-la irundhu vilagi pogalaam. Sila unmaiyaana end-to-end tests-aiyum vachchirunga."),
+        ),
+        quiz = listOf(
+            Quiz("`route.continue()` enna pannum?", listOf("Unmaiyaana request-a anumadhikkum", "Adhai fail pannum", "Reply-a poliyaakkum"), 0, "Virumbina maathiya headers illa body-oda."),
+            Quiz("Sila tests-la images-a yen block pannanum?", listOf("Fast-aagavum stable-aagavum irukkum", "Kattaayam", "Images load aagaadhu"), 0, "Kuraivaana noise, kuraivaana bandwidth."),
+        ),
+    ),
+    "auth" to ExtraTr(
+        deep = listOf(
+            H("Muzhu setup, step by step"),
+            P("1) Oru setup file login panni state-a save pannum. 2) Config oru 'setup' project create panni, mathha projects-a adhai sarndhirukka veikkum. 3) Tests already login aana nilaiyila aarambikkum."),
+            C("playwright.config.ts"),
+            H("Vera vera roles"),
+            C("admin matrum user"),
+            H("Fast-a: API vazhiya login"),
+            C("UI-ye illa"),
+            H("storageState-la enna irukku"),
+            P("Ovvoru origin-ukkum cookies matrum `localStorage`. Session storage serkka padala. Ungal app tokens-a sessionStorage-la vachchirundha, `page.addInitScript` vachchu restore pannunga."),
+            Tip("`.auth/`-a `.gitignore`-la add pannunga. Andha file kittathatta oru password."),
+            Warn("Neenda run-la session expire aanaa, tests 401-oda fail aaga aarambikkum. Ovvoru run-layum file-a fresh-a generate pannunga (setup project pannuradhu adhu dhaan)."),
+        ),
+        quiz = listOf(
+            Quiz("'chromium' project-a 'setup'-ukku wait panna vaikkuradhu edhu?", listOf("dependencies: ['setup']", "array-oda order", "retries"), 0, "dependencies setup mudhalla odurathai uruthi pannum."),
+            Quiz("sessionStorage, storageState-la save aaguma?", listOf("Illa", "Aamaa", "Firefox-la mattum"), 0, "Cookies matrum localStorage mattum dhaan save aagum."),
+        ),
+    ),
+    "codegen-shots" to ExtraTr(
+        deep = listOf(
+            H("Codegen-oda power moves"),
+            C("Useful flags"),
+            P("Codegen window-la assertions create panna 'Assert visibility / text / value' buttons-aiyum, record pannaama locators-a kandupidikka 'Pick locator'-aiyum use pannunga."),
+            H("Screenshots in depth"),
+            C("Variations"),
+            H("Visual regression testing"),
+            C("toHaveScreenshot"),
+            Tip("Visual maatrathai check panna appuram, `npx playwright test --update-snapshots` vachchu snapshots-a venumne update pannunga."),
+            Tip("Dates, ads, random content-a mask panni, animations-a disable pannunga. Illana visual tests noisy-a irukkum."),
+            Warn("Baselines ovvoru OS matrum browser-ukkum thani (`home-chromium-win32.png`). Avatrai CI odura adhey OS-la, mudincha official Docker image-kulla generate pannunga."),
+        ),
+        quiz = listOf(
+            Quiz("Visual tests-la maarikitte irukkura element-a eppadi maraikkardhu?", listOf("mask", "delete", "skip"), 0, "mask rendu images-layum andha areas-a moodi varaiyum."),
+            Quiz("OS-kalukku idaiyila snapshots yen vethuvaa irukku?", listOf("Fonts matrum rendering vethuvaa irukkum", "Playwright bug", "File size"), 0, "Adhunaala CI odura edathulaye baselines-a generate pannunga."),
+        ),
+    ),
+    "parallel-ci" to ExtraTr(
+        deep = listOf(
+            H("Parallelism eppadi work aagudhu"),
+            P("Playwright N workers (processes) start pannum. Ovvoru worker-um muzhu test files-a odum. `fullyParallel: true` irundha, oru file-kulla irukkura tests-um workers-ukku idaiyila pirichchi kudukkappadum. Tests oru worker-oda browser-a eppovum share pannaadhu: ovvoru test-ukkum thani context kidaikkum."),
+            C("Control pannuradhu"),
+            Warn("`serial` mode: oru test fail aanaa, andha group-la meedhi irukkuradhu skip aagum. Kuraivaa use pannunga. Independent tests dhaan better."),
+            H("Tags, modern vazhi"),
+            C("Tags"),
+            H("GitHub Actions workflow"),
+            C("pw.yml"),
+            H("Machines mulumaiyum sharding"),
+            C("Suite-a pirikkuradhu"),
+            H("Docker"),
+            C("Official image-la ellaamae irukku"),
+            Tip("Docker image tag-a neenga install panna `@playwright/test` version-oda match pannunga."),
+        ),
+        quiz = listOf(
+            Quiz("Shard na enna?", listOf("Oru machine-la odura suite-oda oru thundu", "Oru browser", "Oru report"), 0, "Sharding tests-a CI machines idaiyila pirikkum."),
+            Quiz("Report-a `if: always()`-oda yen upload pannanum?", listOf("Tests fail aanaalum adhu kidaikka", "Idam migaikka", "Kattaayam"), 0, "Failures neratthula dhaan ungalukku report vennum."),
+        ),
+    ),
+)

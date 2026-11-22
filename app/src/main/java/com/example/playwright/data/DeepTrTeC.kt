@@ -1,0 +1,191 @@
+package com.example.playwright.data
+
+// Telugu (3): deep dives + extra quizzes, part C (matches DeepC.kt). Code blocks are C("title"); code comes from English.
+
+val deepTeC: Map<String, ExtraTr> = mapOf(
+    "config" to ExtraTr(
+        deep = listOf(
+            H("మీరు ఎక్కువగా తాకే settings"),
+            Table(
+                listOf("Setting", "ఉద్దేశం"),
+                listOf(
+                    listOf("`testDir`", "Specs ఉండే చోటు"),
+                    listOf("`fullyParallel`", "ఒకే file లో ఉన్న tests ని కూడా parallel గా నడుపు"),
+                    listOf("`forbidOnly`", "test.only వదిలేస్తే fail చేయి"),
+                    listOf("`retries`", "Failures ని retry చేయి (ఉదా. CI లో 2, local లో 0)"),
+                    listOf("`workers`", "Parallel processes"),
+                    listOf("`use.viewport`", "Window size"),
+                    listOf("`use.locale / timezoneId`", "ఇతర regions ని test చేయడానికి"),
+                    listOf("`use.ignoreHTTPSErrors`", "చెడ్డ certificates ని accept చేయి"),
+                    listOf("`webServer`", "Tests కి ముందు మీ app ని start చేయి"),
+                ),
+            ),
+            H("CI vs local కి వేరే values"),
+            C("process.env.CI"),
+            H("మీ app ని ఆటోమేటిక్ గా start చేయడం"),
+            C("webServer"),
+            H("Per-file మరియు per-describe overrides"),
+            C("test.use"),
+            Tip("`BASE_URL` ని మాత్రమే మార్చి, అదే suite ని staging మరియు prod మీద నడపొచ్చు: `BASE_URL=https://staging.x.com npx playwright test`."),
+        ),
+        quiz = listOf(
+            Quiz("`forbidOnly` దేని నుండి కాపాడుతుంది?", listOf("మర్చిపోయిన test.only అన్నింటినీ skip చేయడం నుండి", "Slow tests", "మర్చిపోయిన awaits"), 0, "ఒకే test ని నిశ్శబ్దంగా నడపడానికి బదులు run fail అవుతుంది."),
+            Quiz("`reuseExistingServer` ఏం చేస్తుంది?", listOf("ఇప్పటికే నడుస్తున్న server ని వాడుతుంది", "Server ని restart చేస్తుంది", "Server ని mock చేస్తుంది"), 0, "Local లో startup సమయాన్ని ఆదా చేస్తుంది."),
+        ),
+    ),
+    "pom" to ExtraTr(
+        deep = listOf(
+            H("ఇంకా పూర్తి, realistic Page Object"),
+            C("pages/CartPage.ts"),
+            H("Rules of thumb"),
+            Table(
+                listOf("చేయండి", "చేయకండి"),
+                listOf(
+                    listOf("Actions ని expose చేయండి (`login`, `remove`)", "అన్ని చోట్లా raw clicks ని expose చేయడం"),
+                    listOf("Tests assert చేయడానికి locators ని return చేయండి", "అన్ని asserts ని page classes లో దాచేయడం"),
+                    listOf("ఒక page లేదా component కి ఒక class", "ఒక పెద్ద Utils class"),
+                    listOf("Navigation తర్వాత తదుపరి page object ని return చేయండి", "Hard sleeps వాడటం"),
+                ),
+            ),
+            H("Components"),
+            P("Headers, menus, modals చాలా pages లో వస్తాయి. వాటిని సొంత చిన్న classes గా చేసి compose చేయండి: `this.header = new HeaderComponent(page)`."),
+            C("Compose"),
+            Tip("Navigation జరిగినప్పుడు method నుండి ఇంకో page object ని return చేయండి: `async login(): Promise<DashboardPage>`. అప్పుడు tests ఒక కథ లాగా చదవబడతాయి."),
+            Warn("Page Object తప్పనిసరి కాదు. చిన్న suite కి కొన్ని helper functions చాలు. Locators మళ్ళీ మళ్ళీ రావడం చూసినప్పుడు POM ని introduce చేయండి."),
+        ),
+        quiz = listOf(
+            Quiz("Assertions ఎక్కువగా ఎక్కడ ఉండాలి?", listOf("Tests లో", "Page classes లో", "Config లో"), 0, "Page objects page ని describe చేస్తాయి; ఏది సరైనదో tests నిర్ణయిస్తాయి."),
+            Quiz("Component object అంటే ఏంటి?", listOf("Header లేదా modal లాంటి reusable భాగం", "ఒక React class", "ఒక fixture"), 0, "చాలా pages share చేసుకునే reusable parts."),
+        ),
+    ),
+    "fixtures" to ExtraTr(
+        deep = listOf(
+            H("Data మరియు setup తో fixtures"),
+            C("చాలా fixtures కలిపి"),
+            H("Auto fixtures మరియు teardown"),
+            C("auto: true"),
+            H("Worker-scoped fixtures"),
+            P("డిఫాల్ట్ గా ప్రతి test కీ ఒక fixture create అవుతుంది. దాన్ని `{ scope: 'worker' }` అని mark చేస్తే, ఒక worker process కి ఒక్కసారి మాత్రమే create అవుతుంది; ఉదా. ఖరీదైన API token కి."),
+            C("scope"),
+            Tip("Fixtures, `BaseTest` inheritance, `@BeforeMethod`, Spring-style dependency injection ఈ మూడింటినీ ఒకే concept తో మారుస్తాయి."),
+            Warn("వేరే fixtures అవసరం లేనప్పుడు వచ్చే విచిత్రమైన `async ({}, use)` ని గమనించండి. ఖాళీ braces తప్పనిసరి."),
+        ),
+        quiz = listOf(
+            Quiz("`{ auto: true }` ఏం చేస్తుంది?", listOf("ప్రతి test కీ fixture ని ఆటోమేటిక్ గా నడుపుతుంది", "Bugs ని ఆటోమేటిక్ గా fix చేస్తుంది", "Fast చేస్తుంది"), 0, "Test లో దాన్ని అడగాల్సిన అవసరం లేదు."),
+            Quiz("Worker-scoped fixtures create అయ్యేది...", listOf("ఒక worker కి ఒక్కసారి", "ప్రతి test కీ", "ఎప్పుడూ కాదు"), 0, "ఖరీదైన setup కి చాలా మంచిది."),
+        ),
+    ),
+    "data" to ExtraTr(
+        deep = listOf(
+            H("JSON test data"),
+            C("data/users.json + loader"),
+            P("JSON imports కోసం `tsconfig.json` లో `resolveJsonModule` ని enable చేయండి."),
+            H("CSV మరియు Excel"),
+            C("CSV చదవడం"),
+            H("dotenv తో .env files"),
+            C("Secrets ని code నుండి దూరంగా ఉంచండి"),
+            H("Random data"),
+            C("Unique emails"),
+            Tip("Parallel గా నడిచేటప్పుడు tests ఢీకొనకుండా, ప్రతి run కీ test data ని unique గా చేయండి (timestamp లేదా faker)."),
+            Warn("నిజమైన passwords లేదా tokens ని specs లో hard-code చేయకండి. Local లో env vars, CI లో secrets వాడండి."),
+        ),
+        quiz = listOf(
+            Quiz("`process.env.X!` లో ఉన్న exclamation అర్థం ఏంటి?", listOf("నన్ను నమ్ము, ఇది define అయి ఉంది", "లేకపోతే throw చేయి", "దాన్ని delete చేయి"), 0, "TypeScript యొక్క 'undefined అయి ఉండొచ్చు' హెచ్చరికను అది ఆపుతుంది."),
+            Quiz("Test data ని ఎందుకు unique గా చేయాలి?", listOf("లేకపోతే parallel tests ఢీకొనవచ్చు", "అందంగా కనిపిస్తుంది", "Playwright డిమాండ్ చేస్తుంది"), 0, "Shared data వల్ల flaky parallel runs వస్తాయి."),
+        ),
+    ),
+    "api" to ExtraTr(
+        deep = listOf(
+            H("పూర్తి CRUD example"),
+            C("GET, POST, PUT, DELETE"),
+            H("Headers, auth మరియు query"),
+            C("Options"),
+            H("Config ద్వారా API ని share చేయడం"),
+            C("అన్ని requests కి baseURL + headers"),
+            H("Hybrid tests: API setup, UI check"),
+            C("Data ని fast గా create చేసి, UI లో verify చేయండి"),
+            Tip("Error లో response body తో చదవడానికి సులభమైన status check కోసం `await expect(response).toBeOK()` వాడండి."),
+            Warn("Selenium + RestAssured కి రెండు toolchains ఉండేవి. ఇక్కడ `request` fixture బదులు `page.request` వాడితే, API calls, browser cookies ని share చేసుకోగలవు."),
+        ),
+        quiz = listOf(
+            Quiz("Query string పంపే option ఏది?", listOf("params", "query", "search"), 0, "`params: { a: 1 }` అంటే ?a=1 అవుతుంది."),
+            Quiz("`page.request` vs `request` fixture?", listOf("page.request, page యొక్క cookies ని share చేస్తుంది", "తేడా లేదు", "request slow"), 0, "API ద్వారా login అయి UI లో కొనసాగడానికి మంచిది."),
+        ),
+    ),
+    "mock" to ExtraTr(
+        deep = listOf(
+            H("నిజమైన response ని మార్చడం"),
+            C("Fetch చేసి తర్వాత మార్చు"),
+            H("Slow మరియు failing servers ని simulate చేయడం"),
+            C("Errors మరియు delays"),
+            H("Requests ని మార్చకుండా గమనించడం"),
+            C("Page ఏం పంపిందో assert చేయండి"),
+            H("HAR file నుండి mock"),
+            C("Record చేసి replay చేయండి"),
+            Tip("Mocking తో, నిజంగా trigger చేయడం కష్టమైన 'server 500 ఇస్తే ఏమవుతుంది?' states ని test చేయొచ్చు."),
+            Warn("Mocks నిజమైన API నుండి దూరం జరగొచ్చు. కొన్ని నిజమైన end-to-end tests ని కూడా ఉంచండి."),
+        ),
+        quiz = listOf(
+            Quiz("`route.continue()` ఏం చేస్తుంది?", listOf("నిజమైన request ని పంపనిస్తుంది", "దాన్ని fail చేస్తుంది", "Reply ని నకిలీ చేస్తుంది"), 0, "కావాలంటే మార్చిన headers లేదా body తో."),
+            Quiz("కొన్ని tests లో images ని ఎందుకు block చేయాలి?", listOf("Fast గా మరియు stable గా ఉంటుంది", "తప్పనిసరి", "Images load అవ్వవు"), 0, "తక్కువ noise, తక్కువ bandwidth."),
+        ),
+    ),
+    "auth" to ExtraTr(
+        deep = listOf(
+            H("మొత్తం setup, step by step"),
+            P("1) ఒక setup file login చేసి state ని save చేస్తుంది. 2) Config ఒక 'setup' project ని create చేసి, మిగతా projects ని దానిపై ఆధారపడేలా చేస్తుంది. 3) Tests ఇప్పటికే login అయిన స్థితిలో మొదలవుతాయి."),
+            C("playwright.config.ts"),
+            H("వేరే roles"),
+            C("admin మరియు user"),
+            H("Fast గా: API ద్వారా login"),
+            C("అసలు UI లేదు"),
+            H("storageState లో ఏముంది"),
+            P("ప్రతి origin కి cookies మరియు `localStorage`. Session storage చేర్చబడదు. మీ app tokens ని sessionStorage లో ఉంచితే, `page.addInitScript` తో restore చేయండి."),
+            Tip("`.auth/` ని `.gitignore` లో add చేయండి. ఆ file దాదాపు ఒక password."),
+            Warn("పొడవైన run లో session expire అయితే, tests 401 తో fail అవ్వడం మొదలవుతుంది. ప్రతి run లో file ని కొత్తగా generate చేయండి (setup project చేసేది అదే)."),
+        ),
+        quiz = listOf(
+            Quiz("'chromium' project ని 'setup' కోసం wait చేయించేది ఏది?", listOf("dependencies: ['setup']", "array యొక్క order", "retries"), 0, "dependencies, setup ముందు నడవడాన్ని హామీ ఇస్తుంది."),
+            Quiz("sessionStorage, storageState లో save అవుతుందా?", listOf("లేదు", "అవును", "Firefox లో మాత్రమే"), 0, "Cookies మరియు localStorage మాత్రమే save అవుతాయి."),
+        ),
+    ),
+    "codegen-shots" to ExtraTr(
+        deep = listOf(
+            H("Codegen యొక్క power moves"),
+            C("Handy flags"),
+            P("Codegen window లో assertions create చేయడానికి 'Assert visibility / text / value' buttons ని, record చేయకుండా locators కనుగొనడానికి 'Pick locator' ని వాడండి."),
+            H("Screenshots in depth"),
+            C("Variations"),
+            H("Visual regression testing"),
+            C("toHaveScreenshot"),
+            Tip("Visual మార్పును చెక్ చేసిన తర్వాత, `npx playwright test --update-snapshots` తో snapshots ని ఉద్దేశపూర్వకంగా update చేయండి."),
+            Tip("Dates, ads, random content ని mask చేసి, animations ని disable చేయండి. లేకపోతే visual tests noisy గా ఉంటాయి."),
+            Warn("Baselines ప్రతి OS మరియు browser కీ వేరు (`home-chromium-win32.png`). వాటిని CI నడిచే అదే OS లో, వీలైతే official Docker image లోపల generate చేయండి."),
+        ),
+        quiz = listOf(
+            Quiz("Visual tests లో మారుతూ ఉండే element ని ఎలా దాచాలి?", listOf("mask", "delete", "skip"), 0, "mask రెండు images లోనూ ఆ ప్రాంతాలను కప్పేస్తుంది."),
+            Quiz("OS ల మధ్య snapshots ఎందుకు వేరుగా ఉంటాయి?", listOf("Fonts మరియు rendering వేరుగా ఉంటాయి", "Playwright bug", "File size"), 0, "కాబట్టి CI నడిచే చోటే baselines ని generate చేయండి."),
+        ),
+    ),
+    "parallel-ci" to ExtraTr(
+        deep = listOf(
+            H("Parallelism ఎలా పని చేస్తుంది"),
+            P("Playwright N workers (processes) ని start చేస్తుంది. ప్రతి worker పూర్తి test files ని నడుపుతుంది. `fullyParallel: true` ఉంటే, ఒక file లోపల ఉన్న tests కూడా workers మధ్య పంచబడతాయి. Tests ఎప్పుడూ ఒక worker యొక్క browser ని share చేయవు: ప్రతి test కీ సొంత context వస్తుంది."),
+            C("Control చేయడం"),
+            Warn("`serial` mode: ఒక test fail అయితే, ఆ group లో మిగతావి skip అవుతాయి. తక్కువగా వాడండి. Independent tests better."),
+            H("Tags, modern మార్గం"),
+            C("Tags"),
+            H("GitHub Actions workflow"),
+            C("pw.yml"),
+            H("Machines అంతటా sharding"),
+            C("Suite ని విభజించడం"),
+            H("Docker"),
+            C("Official image లో అన్నీ ఉన్నాయి"),
+            Tip("Docker image tag ని మీరు install చేసిన `@playwright/test` version తో match చేయండి."),
+        ),
+        quiz = listOf(
+            Quiz("Shard అంటే ఏంటి?", listOf("ఒక machine లో నడిచే suite యొక్క ఒక ముక్క", "ఒక browser", "ఒక report"), 0, "Sharding tests ని CI machines మధ్య విభజిస్తుంది."),
+            Quiz("Report ని `if: always()` తో ఎందుకు upload చేయాలి?", listOf("Tests fail అయినా అది దొరకడానికి", "స్థలం ఆదా చేయడానికి", "తప్పనిసరి"), 0, "Failures అయినప్పుడే మీకు report కావాలి."),
+        ),
+    ),
+)
