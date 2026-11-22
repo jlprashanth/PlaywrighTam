@@ -71,6 +71,7 @@ import com.example.playwright.data.allLessons
 import com.example.playwright.data.courseModules
 import com.example.playwright.data.hasTranslation
 import com.example.playwright.data.loc
+import com.example.playwright.ui.theme.StatusColors
 
 class ProgressStore(context: Context) {
     private val prefs = context.getSharedPreferences("progress", Context.MODE_PRIVATE)
@@ -249,7 +250,7 @@ private fun ModuleCard(module: Module, store: ProgressStore, expanded: Boolean, 
                 Text(
                     "$doneInModule/${module.lessons.size}",
                     style = MaterialTheme.typography.labelMedium,
-                    color = if (doneInModule == module.lessons.size) Color(0xFF1E8E3E) else MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = if (doneInModule == module.lessons.size) StatusColors.green else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Icon(
                     Icons.Default.KeyboardArrowDown, null,
@@ -267,7 +268,7 @@ private fun ModuleCard(module: Module, store: ProgressStore, expanded: Boolean, 
                             horizontalArrangement = Arrangement.spacedBy(14.dp),
                         ) {
                             if (isDone) {
-                                Icon(Icons.Default.CheckCircle, t("Done", "முடிந்தது", "Mudinjadhu", "అయిపోయింది", "Ayipoyindi"), tint = Color(0xFF1E8E3E), modifier = Modifier.size(28.dp))
+                                Icon(Icons.Default.CheckCircle, t("Done", "முடிந்தது", "Mudinjadhu", "అయిపోయింది", "Ayipoyindi"), tint = StatusColors.green, modifier = Modifier.size(28.dp))
                             } else {
                                 Surface(shape = CircleShape, color = accent.copy(alpha = 0.16f), modifier = Modifier.size(28.dp)) {
                                     Box(contentAlignment = Alignment.Center) {
@@ -307,7 +308,7 @@ fun LessonScreen(id: String, store: ProgressStore, onBack: () -> Unit, onOpen: (
                     Text(t("Lesson ${index + 1} of ${allLessons.size}", "பாடம் ${index + 1} / ${allLessons.size}", "Lesson ${index + 1} / ${allLessons.size}", "పాఠం ${index + 1} / ${allLessons.size}", "Paatham ${index + 1} / ${allLessons.size}"), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 TextButton(onClick = { store.toggle(lesson.id) }) {
-                    if (isDone) Icon(Icons.Default.CheckCircle, null, tint = Color(0xFF1E8E3E), modifier = Modifier.size(18.dp))
+                    if (isDone) Icon(Icons.Default.CheckCircle, null, tint = StatusColors.green, modifier = Modifier.size(18.dp))
                     else Spacer(Modifier.width(0.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(if (isDone) t("Done", "முடிந்தது", "Mudinjadhu", "అయిపోయింది", "Ayipoyindi") else t("Mark done", "முடிந்தது என குறி", "Mudinjadhu nu mark pannu", "అయిపోయింది అని మార్క్ చెయ్యి", "Ayipoyindi ani mark cheyyi"))
@@ -389,8 +390,8 @@ private fun LessonBody(lesson: Lesson, accent: Color, translated: Boolean, modif
 @Composable
 private fun QuizCard(quiz: com.example.playwright.data.Quiz, heading: String, key: String) {
     var picked by remember(key) { mutableStateOf<Int?>(null) }
-    val green = Color(0xFF1E8E3E)
-    val red = Color(0xFFD93025)
+    val green = StatusColors.green
+    val red = StatusColors.red
 
     SectionCard(heading) {
         Text(richText(quiz.question), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)

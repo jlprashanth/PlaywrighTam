@@ -17,7 +17,7 @@ val moduleTe: Map<String, Pair<String, String>> = mapOf(
 
 val moduleTn: Map<String, Pair<String, String>> = mapOf(
     "m1" to ("Playwright tho parichayam" to "Adhemiti, endhuku bagundi, first test"),
-    "m2" to ("Kavalsinantha TypeScript" to "Avasaramainantheyy, bhayam asalu ledu"),
+    "m2" to ("Kavalsinantha TypeScript" to "Avasaram ayyentha matrame, bhayam ledu"),
     "m3" to ("Test basics" to "Structure, run cheyyadam, reports"),
     "m4" to ("Elements ni pattukovadam (Locators)" to "Pro la chupinchandi"),
     "m5" to ("Panulu (Actions)" to "Click, type, select, drag, switch"),

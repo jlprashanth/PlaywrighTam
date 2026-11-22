@@ -35,11 +35,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.playwright.data.allLessons
+import com.example.playwright.ui.theme.StatusColors
 
 @Composable
 fun SettingsScreen(store: ProgressStore, onBack: () -> Unit) {
     var confirm by remember { mutableStateOf(false) }
-    val red = Color(0xFFD93025)
+    val red = StatusColors.red
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -54,7 +55,7 @@ fun SettingsScreen(store: ProgressStore, onBack: () -> Unit) {
             Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            SectionCard(t("🎨 Appearance", "🎨 தோற்றம்", "🎨 Appearance", "🎨 రూపం", "🎨 Roopam")) {
+            SectionCard(t("🎨 Appearance", "🎨 தோற்றம்", "🎨 Appearance", "🎨 రూపం", "🎨 Appearance")) {
                 Text(t("Choose how the app looks.", "ஆப் எப்படி தெரிய வேண்டும் என்பதைத் தேர்வு செய்யுங்கள்.", "App eppadi theriyanum-nu choose pannunga.", "యాప్ ఎలా కనిపించాలో ఎంచుకోండి.", "App ela kanipinchaalo enchukondi."), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                     listOf(t("System", "சிஸ்டம்", "System", "సిస్టమ్", "System"), t("Light", "வெளிச்சம்", "Light", "లైట్", "Light"), t("Dark", "இருட்டு", "Dark", "డార్క్", "Dark")).forEachIndexed { i, label ->

@@ -35,6 +35,7 @@ import com.example.playwright.data.P
 import com.example.playwright.data.Table
 import com.example.playwright.data.Tip
 import com.example.playwright.data.Warn
+import com.example.playwright.ui.theme.StatusColors
 
 @Composable
 fun DeepDive(blocks: List<Block>, accent: Color) {
@@ -45,8 +46,8 @@ fun DeepDive(blocks: List<Block>, accent: Color) {
                     is H -> Text(b.text, style = MaterialTheme.typography.titleMedium, color = accent, modifier = Modifier.padding(top = 6.dp))
                     is P -> Text(richText(b.text), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                     is Code -> CodeBlock(b.title, b.code, b.lang)
-                    is Tip -> Callout("💡", b.text, Color(0xFF1E8E3E))
-                    is Warn -> Callout("⚠️", b.text, Color(0xFFE8710A))
+                    is Tip -> Callout("💡", b.text, StatusColors.green)
+                    is Warn -> Callout("⚠️", b.text, StatusColors.orange)
                     is Table -> SimpleTable(b)
                 }
             }

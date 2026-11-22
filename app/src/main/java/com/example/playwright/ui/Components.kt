@@ -43,6 +43,7 @@ import com.example.playwright.ui.theme.GPurple
 import com.example.playwright.ui.theme.GRed
 import com.example.playwright.ui.theme.GTeal
 import com.example.playwright.ui.theme.GYellow
+import com.example.playwright.ui.theme.StatusColors
 
 val accents = listOf(GBlue, GRed, GGreen, GYellow, GPurple, GTeal, GOrange, GPink)
 
@@ -76,7 +77,7 @@ fun highlight(code: String, lang: String): AnnotatedString {
     val cComment = if (dark) Color(0xFF9AA0A6) else Color(0xFF80868B)
     val cString = if (dark) Color(0xFF81C995) else Color(0xFF188038)
     val cKeyword = if (dark) Color(0xFFD7AEFB) else Color(0xFF9334E6)
-    val cNumber = if (dark) Color(0xFFFCAD70) else Color(0xFFE8710A)
+    val cNumber = StatusColors.orange
     val useKw = lang != "Bash"
     return buildAnnotatedString {
         var last = 0
