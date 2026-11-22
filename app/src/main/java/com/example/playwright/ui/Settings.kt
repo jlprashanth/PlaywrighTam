@@ -38,7 +38,7 @@ import com.example.playwright.data.allLessons
 import com.example.playwright.ui.theme.StatusColors
 
 @Composable
-fun SettingsScreen(store: ProgressStore, onBack: () -> Unit) {
+fun SettingsScreen(store: ProgressStore, onBack: () -> Unit, onShowWelcome: () -> Unit) {
     var confirm by remember { mutableStateOf(false) }
     val red = StatusColors.red
 
@@ -90,6 +90,9 @@ fun SettingsScreen(store: ProgressStore, onBack: () -> Unit) {
                             shape = RoundedCornerShape(50),
                         )
                     }
+                }
+                OutlinedButton(onClick = onShowWelcome) {
+                    Text(t("Show start page", "தொடக்கப் பக்கத்தைக் காட்டு", "Start page-a kaattu", "స్టార్ట్ పేజీ చూపించు", "Start page choopinchu"))
                 }
             }
 

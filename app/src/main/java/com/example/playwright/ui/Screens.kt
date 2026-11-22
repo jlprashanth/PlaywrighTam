@@ -100,6 +100,20 @@ class ProgressStore(context: Context) {
         prefs.edit().putInt("theme", mode).apply()
     }
 
+    // Existing installs that already picked a language or finished a lesson skip the start page.
+    var onboarded by mutableStateOf(prefs.getBoolean("onboarded", prefs.contains("lang") || prefs.contains("done")))
+        private set
+
+    init {
+        // The first-launch start page always opens in English, whatever was saved or restored from backup.
+        if (!onboarded) language = 0
+    }
+
+    fun finishOnboarding() {
+        onboarded = true
+        prefs.edit().putBoolean("onboarded", true).putInt("lang", language).apply()
+    }
+
     fun resetProgress() {
         done = emptySet()
         prefs.edit().remove("done").apply()
@@ -115,14 +129,19 @@ class ProgressStore(context: Context) {
 fun PlaywrightApp(store: ProgressStore) {
     var openId by rememberSaveable { mutableStateOf<String?>(null) }
     var expandedId by rememberSaveable { mutableStateOf<String?>("m1") }
+    var showWelcome by rememberSaveable { mutableStateOf(!store.onboarded) }
     val listState = rememberLazyListState()
 
-    BackHandler(enabled = openId != null) { openId = null }
+    // On first launch Back exits the app as usual; when opened from Settings it returns there.
+    BackHandler(enabled = showWelcome && store.onboarded) { showWelcome = false }
+    BackHandler(enabled = !showWelcome && openId != null) { openId = null }
 
     AnimatedContent(
-        targetState = openId,
+        targetState = if (showWelcome) "__welcome" else openId,
         transitionSpec = {
-            if (targetState != null && initialState == null) {
+            if (initialState == "__welcome" || targetState == "__welcome") {
+                fadeIn(tween(400)) togetherWith fadeOut(tween(300))
+            } else if (targetState != null && initialState == null) {
                 (slideInHorizontally(tween(220)) { it / 8 } + fadeIn(tween(220))) togetherWith fadeOut(tween(120))
             } else if (targetState == null) {
                 fadeIn(tween(200)) togetherWith (slideOutHorizontally(tween(200)) { it / 8 } + fadeOut(tween(150)))
@@ -132,10 +151,17 @@ fun PlaywrightApp(store: ProgressStore) {
         },
         label = "screen",
     ) { id ->
-        if (id == null) {
+        if (id == "__welcome") {
+            WelcomeScreen(store, onStart = {
+                val firstTime = !store.onboarded
+                store.finishOnboarding()
+                showWelcome = false
+                if (firstTime) openId = null
+            })
+        } else if (id == null) {
             HomeScreen(store, listState, expandedId, { expandedId = it }, { openId = it }, onSettings = { openId = "__settings" })
         } else if (id == "__settings") {
-            SettingsScreen(store, onBack = { openId = null })
+            SettingsScreen(store, onBack = { openId = null }, onShowWelcome = { showWelcome = true })
         } else {
             LessonScreen(id, store, onBack = { openId = null }, onOpen = { openId = it })
         }

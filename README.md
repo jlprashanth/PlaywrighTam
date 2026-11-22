@@ -23,6 +23,7 @@ An offline Android app that teaches **TypeScript + Playwright** to people who al
   | తెలుగు | Telugu |
   | Tenglish | Telugu written in English letters |
 
+- **Start page** on first launch with the app logo and a language picker (English is selected by default). You can open it again from Settings.
 - **Light, dark or system theme**, with edge-to-edge Material 3 design.
 - **Works fully offline.** No account, no network access, no ads.
 
@@ -45,7 +46,7 @@ An offline Android app that teaches **TypeScript + Playwright** to people who al
 - Kotlin and Jetpack Compose (Material 3)
 - Single-activity app, no third-party runtime dependencies beyond AndroidX
 - `minSdk 24`, `targetSdk 37`
-- Progress, theme and language saved in `SharedPreferences`
+- Progress, theme, language and the "start page seen" flag saved in `SharedPreferences`
 
 ## Project structure
 
@@ -62,7 +63,8 @@ app/src/main/java/com/example/playwright/
 └── ui/
     ├── Screens.kt           # home, lesson and quiz screens
     ├── Deep.kt              # deep-dive and challenge cards
-    ├── Settings.kt          # theme, language, reset progress
+    ├── Welcome.kt           # first-launch start page with logo and language picker
+    ├── Settings.kt          # theme, language, show start page, reset progress
     ├── Components.kt        # code blocks, syntax highlighting, shared widgets
     └── Strings.kt           # language selection helper
 ```
