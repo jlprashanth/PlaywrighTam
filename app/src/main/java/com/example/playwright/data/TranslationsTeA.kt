@@ -17,11 +17,11 @@ val moduleTe: Map<String, Pair<String, String>> = mapOf(
 
 val moduleTn: Map<String, Pair<String, String>> = mapOf(
     "m1" to ("Playwright tho parichayam" to "Adhemiti, endhuku bagundi, first test"),
-    "m2" to ("Kavalsinantha TypeScript" to "Avasaramainantheyy, bhayam asalu ledhu"),
+    "m2" to ("Kavalsinantha TypeScript" to "Avasaramainantheyy, bhayam asalu ledu"),
     "m3" to ("Test basics" to "Structure, run cheyyadam, reports"),
     "m4" to ("Elements ni pattukovadam (Locators)" to "Pro la chupinchandi"),
     "m5" to ("Panulu (Actions)" to "Click, type, select, drag, switch"),
-    "m6" to ("Aagi chudatam & check cheyyadam" to "Auto-wait mariyu assertions"),
+    "m6" to ("Aagi chudatam & check cheyyadam" to "Auto-wait and assertions"),
     "m7" to ("Pro la set cheyyadam" to "Config, Page Objects, fixtures, data"),
     "m8" to ("Power-ups" to "API, mocking, login reuse, CI"),
     "m9" to ("Hero zone" to "Capstone, best practices, interview prep"),
@@ -156,14 +156,14 @@ val lessonTeA: Map<String, Tr> = mapOf(
 val lessonTnA: Map<String, Tr> = mapOf(
     "what-is" to Tr(
         title = "Playwright ante enti?",
-        story = "Oka chinna robo friend unnadu anukondi. Vaadu web browser open chesi, meeru chesinatte type chestadu, click chestadu, scroll chestadu. Meeru oka to-do list rasivvandi, robo adhi follow ayyi, edaina theda ga unte cheppesthadu. Aa robo ne `Playwright`. Deenni Microsoft thayaru chesindi; Chrome, Firefox, Safari (WebKit) moodintlonu pani chestundi.",
+        story = "Oka chinna robo friend unnadu anukondi. Vaadu web browser open chesi, meeru chesinatte type chestadu, click chestadu, scroll chestadu. Meeru oka to-do list rasivvandi, robo adi follow ayyi, edaina theda ga unte cheppesthadu. Aa robo ne `Playwright`. Deenni Microsoft thayaru chesindi; Chrome, Firefox, Safari (WebKit) moodintlonu pani chestundi.",
         caption = "Ade katha, maatalu maatrame kotha: browser ni launch cheyyi, oka tab (`page`) open cheyyi, site ki vellu, close cheyyi.",
         points = listOf(
-            "`chromedriver.exe` download cheyyalsina pani ledhu, mee browser version tho match cheyyalsina pani kuda ledhu. Playwright thana browsers ni thane techukuntundi.",
-            "Idhi Node.js lo nadustundi. Meeru TypeScript lo rastaru; adhi types unna JavaScript (Java laagane!).",
+            "`chromedriver.exe` download cheyyalsina pani ledu, mee browser version tho match cheyyalsina pani kuda ledu. Playwright thana browsers ni thane techukuntundi.",
+            "Idi Node.js lo nadustundi. Meeru TypeScript lo rastaru; adi types unna JavaScript (Java laagane!).",
             "Chromium, Firefox, WebKit annintiki okate API.",
         ),
-        q = "Playwright lo meeru manage cheyyalsina avasaram lenidhi edhi?",
+        q = "Playwright lo meeru manage cheyyalsina avasaram lenidhi edi?",
         opts = listOf("Node.js", "chromedriver.exe file", "Mee test code"),
         why = "Playwright thana browsers ni thane download chesi manage chestundi, andhuke driver thalanoppi undadu.",
     ),
@@ -183,7 +183,7 @@ val lessonTnA: Map<String, Tr> = mapOf(
     ),
     "setup" to Tr(
         title = "Mee toy box ni ready cheddam",
-        story = "Aadukovadaniki oka toy box kavali kadha. `Node.js` (engine) install cheyyandi, aa tarvata Playwright ni oka ready-made project create cheyyamani cheppandi. Oka command, konni prashnalu, ayipoyindi. Idhi `Maven archetype` lantidhe, kani inka friendly ga untundi.",
+        story = "Aadukovadaniki oka toy box kavali kadha. `Node.js` (engine) install cheyyandi, aa tarvata Playwright ni oka ready-made project create cheyyamani cheppandi. Oka command, konni prashnalu, ayipoyindi. Idi `Maven archetype` lantidhe, kani inka friendly ga untundi.",
         caption = "Veetini terminal lo run cheyyandi (VS Code terminal baga pani chestundi).",
         points = listOf(
             "`package.json` ante mee `pom.xml`. Dependencies, scripts anni andulone untayi.",
@@ -191,9 +191,9 @@ val lessonTnA: Map<String, Tr> = mapOf(
             "`playwright.config.ts` ante mee `testng.xml` + settings.",
             "`tests/` folder lo spec files untayi. Peru lu `.spec.ts` tho mugustayi.",
         ),
-        q = "`package.json` ki samanamaina Selenium/Maven file edhi?",
+        q = "`package.json` ki equal ayina Selenium/Maven file edi?",
         opts = listOf("pom.xml", "testng.xml", "chromedriver.exe"),
-        why = "Rendintlonu dependencies mariyu project info untayi.",
+        why = "Rendintlonu dependencies and project info untayi.",
     ),
     "first-test" to Tr(
         title = "Mee modati test",
@@ -201,7 +201,7 @@ val lessonTnA: Map<String, Tr> = mapOf(
         caption = "Run cheyyadaniki: npx playwright test",
         points = listOf(
             "`test('name', ...)` ante mee `@Test`.",
-            "`{ page }` ante: \"Playwright, oka kotha tab ivvu.\" Driver setup code avasaram ledhu.",
+            "`{ page }` ante: \"Playwright, oka kotha tab ivvu.\" Driver setup code avasaram ledu.",
             "`/Playwright/` oka regular expression; \"Playwright undi\" ani artham.",
             "`await` prathichota vastundi. Endhukho TypeScript section lo chuddam.",
         ),
@@ -210,21 +210,21 @@ val lessonTnA: Map<String, Tr> = mapOf(
         why = "Prathi test ki Playwright clean tab create chesi lopaliki istundi.",
     ),
     "ts-vars" to Tr(
-        title = "Variables mariyu types",
+        title = "Variables and types",
         story = "Variables ante perlu antinchina dabbalu. `const` dabba gum petti atikinchesaru: lopala pettindi maradu. `let` dabba ni open chesi tarvata marchukovachu. Type ni colon tarvata rastaru, name tag laaga: `age: number`.",
         caption = "TypeScript chalasarlu type ni thane oohistundi, andhuke `const x = 5` ani kuda rayochu.",
         points = listOf(
-            "Default ga `const` vadandi; value marite `let`. `var` vaddu.",
+            "Default ga `const` vaadandi; value marite `let`. `var` vaddu.",
             "Numbers ki okate type: `number` (int, double, long levu).",
-            "Compare cheyyadaniki `===` vadandi, `==` vaddu.",
+            "Compare cheyyadaniki `===` vaadandi, `==` vaddu.",
             "Semicolon optional; kani chalamandi pedatharu.",
         ),
-        q = "Tarvata value marchadaniki oppukune keyword edhi?",
+        q = "Tarvata value marchadaniki oppukune keyword edi?",
         opts = listOf("const", "let", "string"),
         why = "`let` dabbalanu marchukovachu; `const` kudaradu.",
     ),
     "ts-functions" to Tr(
-        title = "Functions mariyu arrow functions",
+        title = "Functions and arrow functions",
         story = "Function ante recipe card: ingredients istey, vanta chesi istundi. Arrow function ante ade recipe ni `=>` tho short ga rayadam. Playwright nindaa arrows vastayi, endhukante tests kuda arrow functions ne.",
         caption = "`(x) => ...` ante Java lo lambda `x -> ...` lantidhe.",
         points = listOf(
@@ -237,9 +237,9 @@ val lessonTnA: Map<String, Tr> = mapOf(
         why = "Arrow functions ne TypeScript lo lambdas.",
     ),
     "ts-objects" to Tr(
-        title = "Arrays mariyu objects",
+        title = "Arrays and objects",
         story = "Array ante bommalu oka varusalo pettina shelf. Object ante `name`, `age`, `role` ani labels antinchina jebulu unna backpack. Playwright oka backpack ichesi \"neeku kavalsina jebu maatrame teesuko\" antundi. Daanne destructuring antaru.",
-        caption = "Data pettadaniki class avasaram ledhu. Simple object chalu.",
+        caption = "Data pettadaniki class avasaram ledu. Simple object chalu.",
         points = listOf(
             "Objects: `{ key: value }`. Dot tho access cheyyochu: `user.name`.",
             "Arrays: `[a, b, c]`. Loop: `for (const x of list)`.",
@@ -250,7 +250,7 @@ val lessonTnA: Map<String, Tr> = mapOf(
         why = "Adhe destructuring: Playwright helpers nindina object istundi; meeku kavalsindi teesukuntaru.",
     ),
     "ts-async" to Tr(
-        title = "async mariyu await (chala mukhyam)",
+        title = "async and await (chala mukhyam)",
         story = "Meeru oka pizza order chesaru. Shop \"vastondi\" ani chebutundi (adhe `Promise`). Rakamundey thinadam modalu pedithe, khali chetule. `await` ante: pizza vachhe varaku ikkada aagu, aa tarvata continue cheyyi. Playwright lo prathi action oka pizza order laantidhe, andhuke pratidaniki `await` kavali.",
         caption = "`await` kevalam `async` ani mark chesina function lopale pani chestundi.",
         points = listOf(
@@ -260,20 +260,20 @@ val lessonTnA: Map<String, Tr> = mapOf(
             "`async` function ki mundu; `await` action ki mundu.",
         ),
         q = "`click()` ki mundu `await` marchipothe emavtundi?",
-        opts = listOf("Click ayipokamundey next step parigettutundi", "Java error istundi", "Emi kaadu, adhi optional"),
+        opts = listOf("Click ayipokamundey next step parigettutundi", "Java error istundi", "Emi kaadu, adi optional"),
         why = "await lekapothe code aagadu; steps okadaanlo okati kalisipoyi test flaky avtundi.",
     ),
     "ts-classes" to Tr(
-        title = "Classes, import mariyu export",
-        story = "Friend room nundi oka bomma aruvu techukunnattu: meeru `import` chestaru. Mee bommani vere vallu teesukovalante `export` chestaru. Classes Java laagane, kani hadavidi takkuva. Tarvata Page Objects kosam deenne vadatharu.",
+        title = "Classes, import and export",
+        story = "Friend room nundi oka bomma aruvu techukunnattu: meeru `import` chestaru. Mee bommani vere vallu teesukovalante `export` chestaru. Classes Java laagane, kani hadavidi takkuva. Tarvata Page Objects kosam deenne vaadatharu.",
         caption = "`constructor(private page: Page) {}` oke line lo field ni declare chesi value kuda istundi.",
         points = listOf(
             "`export` ante oka file lo vishayaniki `public` lantidhi.",
-            "`import { X } from './file'` ante Java lo `import package.X;` ki badulu. Relative paths vadandi.",
-            "Class lopala fields ni access cheyyadaniki `this.` vadandi.",
+            "`import { X } from './file'` ante Java lo `import package.X;` ki badulu. Relative paths vaadandi.",
+            "Class lopala fields ni access cheyyadaniki `this.` vaadandi.",
             "Browser pani chese methods `async` ga untayi.",
         ),
-        q = "Mee class ni vere file vadukovadaniki edhi oppukuntundi?",
+        q = "Mee class ni vere file vaadukovadaniki edi oppukuntundi?",
         opts = listOf("export", "static", "final"),
         why = "Daanni `export` ani mark cheyyandi; aa tarvata vere chota `import` cheyyandi.",
     ),

@@ -1,7 +1,6 @@
 package com.example.playwright.data
 
-// EXPERIMENTAL: Tamil (1) and Tanglish (2) translations. Language 0 = English.
-// To reverse the experiment: delete this file, Strings.kt, and the language chips in Settings.kt.
+// Translations: 1 = Tamil, 2 = Tanglish, 3 = Telugu, 4 = Tenglish. Language 0 = English (the source).
 
 data class Tr(
     val title: String,
@@ -350,7 +349,7 @@ val lessonTgA: Map<String, Tr> = mapOf(
             "`async` function-ku munnadi; `await` action-ku munnadi.",
         ),
         q = "`click()`-ku munnadi `await` marandha enna aagalaam?",
-        opts = listOf("Click mudiyarathukku munnadi next step odiduum", "Java error tharum", "Onnum aagaadhu, adhu optional"),
+        opts = listOf("Click mudiyarathukku munnadi next step odidum", "Java error tharum", "Onnum aagaadhu, adhu optional"),
         why = "await illaama code wait pannaadhu; steps onnoda onnu kalandhu test flaky aagum.",
     ),
     "ts-classes" to Tr(

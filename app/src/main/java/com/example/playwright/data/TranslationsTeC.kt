@@ -142,7 +142,7 @@ val lessonTnC: Map<String, Tr> = mapOf(
     ),
     "pom" to Tr(
         title = "Page Object Model",
-        story = "Prathisari robo ki chinna chinna steps anni cheppe badulu, okasari \"page guide\" rastaru: email box ekkada, button ekkada. Aa tarvata anni tests \"login cheyyi\" ani maatrame chebutayi. Idhi Selenium lo meeku telusu; ikkada inka short ga.",
+        story = "Prathisari robo ki chinna chinna steps anni cheppe badulu, okasari \"page guide\" rastaru: email box ekkada, button ekkada. Aa tarvata anni tests \"login cheyyi\" ani maatrame chebutayi. Idi Selenium lo meeku telusu; ikkada inka short ga.",
         caption = "`PageFactory.initElements` kani `@FindBy` kani levu. Locators lazy; kabatti store cheyyadam safe.",
         points = listOf(
             "`Locator` ni constructor lo pettandi. Avi maps, elements kaadu; kabatti edi stale avvadu.",
@@ -150,8 +150,8 @@ val lessonTnC: Map<String, Tr> = mapOf(
             "Assertions ni tests lo pettandi, page classes lo kaadu (manchi alavatu).",
         ),
         q = "Page class lo Locators ni store cheyyadam endhuku safe?",
-        opts = listOf("Prathi action lonu malli vetukutayi", "Eppudu cache avtayi", "Avi static"),
-        why = "Locators lazy; prathisari element ni malli vetukutayi; kabatti stale samasya ledhu.",
+        opts = listOf("Prathi action lonu malli vetukutayi", "Eppatiki cache lone untayi", "Avi static"),
+        why = "Locators lazy; prathisari element ni malli vetukutayi; kabatti stale samasya ledu.",
     ),
     "fixtures" to Tr(
         title = "Fixtures: readymade bommalu",
@@ -167,14 +167,14 @@ val lessonTnC: Map<String, Tr> = mapOf(
         why = "Aa chota test body nadustundi; use() tarvata unna code clean chestundi.",
     ),
     "data" to Tr(
-        title = "Test data mariyu environments",
+        title = "Test data and environments",
         story = "Ade recipe ni veru veru ingredients tho vandochu. Users list lo loop chesi prathi user ki oka test create cheyyochu; TestNG lo `@DataProvider` laaga. Passwords lanti secrets environment variables lo undali, code lo kaadu.",
         caption = "Run cheyyadaniki: APP_PASSWORD=xyz npx playwright test",
         points = listOf(
-            "Simple `for` loop prathi item ki oka test create chestundi. Annotation magic ledhu.",
+            "Simple `for` loop prathi item ki oka test create chestundi. Annotation magic ledu.",
             "`process.env.NAME` environment variables ni chaduvutundi. `.env` files kosam `dotenv` package.",
-            "JSON files ni kuda import chesi data vadukovachu.",
-            "`??` ante \"edama vaipu khali ga unte kudi vaipudi vadu\".",
+            "JSON files ni kuda import chesi data vaadukovachu.",
+            "`??` ante \"edama vaipu khali ga unte kudi vaipudi vaadu\".",
         ),
         q = "Environment variable ni chadavadam ela?",
         opts = listOf("System.getenv()", "process.env.NAME", "env.get(NAME)"),
@@ -182,12 +182,12 @@ val lessonTnC: Map<String, Tr> = mapOf(
     ),
     "api" to Tr(
         title = "API testing lopale undi",
-        story = "Konnisarlu browser ni vadilesi server tho neruga matladatam fast; nadichi vellakunda phone lo call chesinattu. Playwright lo `request` helper undi; RestAssured avasaram ledhu.",
+        story = "Konnisarlu browser ni vadilesi server tho neruga matladatam fast; nadichi vellakunda phone lo call chesinattu. Playwright lo `request` helper undi; RestAssured avasaram ledu.",
         caption = "`request` ante `page` lanti inko free fixture.",
         points = listOf(
             "`request.get/post/put/delete` anni dorukutayi.",
             "Data ni fast ga create chesi, UI bhaganni maatrame test cheyyadaniki super.",
-            "API mariyu UI tests oke project lo, oke config ni share chesukuntu undochu.",
+            "API and UI tests oke project lo, oke config ni share chesukuntu undochu.",
         ),
         q = "`request` ekkadi nundi vastundi?",
         opts = listOf("Oka fixture nundi", "Maven plugin nundi", "Separate install"),
@@ -195,8 +195,8 @@ val lessonTnC: Map<String, Tr> = mapOf(
     ),
     "mock" to Tr(
         title = "Network mocking",
-        story = "Postman vadi uttaranni meeru rahasyam ga marchestunnarani oohinchukondi. Website, server reply ichindanukuntundi; kani aa reply rasindi meeru. Deenivalla nijamaina server ni muttukokunda vinta sandarbhalanu (errors, khali lists) test cheyyochu.",
-        caption = "`goto` ki munde route ni set cheyyandi; appude page yokka modati request pattukuntundi.",
+        story = "Postman vaadi uttaranni meeru rahasyam ga marchestunnarani oohinchukondi. Website, server reply ichindanukuntundi; kani aa reply rasindi meeru. Deenivalla nijamaina server ni muttukokunda vinta sandarbhalanu (errors, khali lists) test cheyyochu.",
+        caption = "`goto` ki munde route ni set cheyyandi; appude page modati request pattukuntundi.",
         points = listOf(
             "`route.fulfill()` mee fake data tho reply istundi.",
             "`route.abort()` network failure ni simulate chestundi.",
@@ -207,20 +207,20 @@ val lessonTnC: Map<String, Tr> = mapOf(
         why = "Page request cheyyadaniki munde route undali.",
     ),
     "auth" to Tr(
-        title = "Okkasari login, ekkadaina vadandi",
+        title = "Okkasari login, ekkadaina vaadandi",
         story = "Prathi ride ki mundu ticket endhuku chupinchali? Okasari chupinchi, wristband teesukuni, neruga rides ki vellochu. Playwright mee login state ni (cookies, storage) oka file lo save chesi prathi test ki istundi.",
         caption = "Ippudu mee test suite already login ayina sthiti lo modalavtundi. Chala time aada.",
         points = listOf(
-            "`storageState` cookies mariyu local storage ni oka JSON file lo save chestundi.",
-            "\"setup\" project mundu nadustundi; `dependencies` vadi.",
+            "`storageState` cookies and local storage ni oka JSON file lo save chestundi.",
+            "\"setup\" project mundu nadustundi; `dependencies` vaadi.",
             "`.auth` folder ni `.gitignore` lo cherchandi.",
         ),
         q = "`storageState` deenni save chestundi?",
-        opts = listOf("Test results", "Cookies mariyu local storage", "Screenshots"),
+        opts = listOf("Test results", "Cookies and local storage", "Screenshots"),
         why = "Adhe mimmalni login sthiti lo unchutundi.",
     ),
     "codegen-shots" to Tr(
-        title = "Codegen, screenshots mariyu visuals",
+        title = "Codegen, screenshots and visuals",
         story = "Chetho rayadam istam ledha? `codegen` on chesi, oka website lo click cheyyandi. Robo mimmalni gamaninchi test rasestundi! Bommalu kuda teesi, anukokunda vachhe design marpulanu pattukovadaniki compare cheyyochu.",
         caption = "`toHaveScreenshot` tho modati run baseline ni create chestundi. Aa tarvata compare chestundi.",
         points = listOf(
@@ -230,10 +230,10 @@ val lessonTnC: Map<String, Tr> = mapOf(
         ),
         q = "`npx playwright codegen` em chestundi?",
         opts = listOf("Meeru click chestunte test code rastundi", "Report create chestundi", "Playwright ni update chestundi"),
-        why = "Idhi mee actions ni record chesi code ga marchutundi.",
+        why = "Idi mee actions ni record chesi code ga marchutundi.",
     ),
     "parallel-ci" to Tr(
-        title = "Parallel, retries, tags mariyu CI",
+        title = "Parallel, retries, tags and CI",
         story = "Chalamandi kalisthe pani sulabham: Playwright test files ni thane parallel ga naduputhundi. Bad luck valla oka test fail ayithe malli try cheyyochu. `@smoke` lanti peru tags antinchi konni tests maatrame run cheyyochu. Chivaraga, prathi code push lonu CI lo robo annee nadipistundi.",
         caption = "Config lo `retries: 2` flaky tests ni fail avvakamundu malli try cheyyanistundi.",
         points = listOf(
@@ -244,6 +244,6 @@ val lessonTnC: Map<String, Tr> = mapOf(
         ),
         q = "@smoke ani tag chesina tests ni maatrame run cheyyadam ela?",
         opts = listOf("--grep @smoke", "--only smoke", "-Dgroups=smoke"),
-        why = "Test title lo unna text tho filter cheyyadaniki --grep vadandi.",
+        why = "Test title lo unna text tho filter cheyyadaniki --grep vaadandi.",
     ),
 )

@@ -212,6 +212,7 @@ fun HomeScreen(
                                     else -> t("Continue: ", "தொடர்க: ", "Continue: ", "కంటిన్యూ: ", "Continue: ") + next.title
                                 },
                                 maxLines = 1,
+                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                             )
                         }
                     }
@@ -323,14 +324,14 @@ fun LessonScreen(id: String, store: ProgressStore, onBack: () -> Unit, onOpen: (
                         onClick = { onOpen(allLessons[index - 1].id) },
                         enabled = index > 0,
                         modifier = Modifier.weight(1f),
-                    ) { Text(t("Previous", "முந்தைய", "Previous", "వెనక్కి", "Venakki")) }
+                    ) { Text(t("Previous", "முந்தைய", "Previous", "వెనక్కి", "Previous")) }
                     Button(
                         onClick = {
                             store.markDone(lesson.id)
                             if (index < allLessons.lastIndex) onOpen(allLessons[index + 1].id) else onBack()
                         },
                         modifier = Modifier.weight(1.4f),
-                    ) { Text(if (index < allLessons.lastIndex) t("Done · Next", "முடிந்தது · அடுத்து", "Mudinjadhu · Next", "అయింది · తర్వాత", "Ayindi · Tarvata") else t("Finish 🎉", "முடித்தேன் 🎉", "Finish 🎉", "ముగించాను 🎉", "Mugimchaanu 🎉")) }
+                    ) { Text(if (index < allLessons.lastIndex) t("Done · Next", "முடிந்தது · அடுத்து", "Mudinjadhu · Next", "అయింది · తర్వాత", "Ayindi · Tarvata") else t("Finish 🎉", "முடித்தேன் 🎉", "Finish 🎉", "ముగించాను 🎉", "Muginchaanu 🎉")) }
                 }
             }
         },

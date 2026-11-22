@@ -20,7 +20,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
             P("`Browser` nu sonna muzhu browser program. `BrowserContext` adhukulla irukkura clean profile (incognito window maadhiri: thani cookies, thani storage). `Page` nu sonna oru context-kulla irukkura oru tab. `Locator` nu sonna page-la irukkura oru vishayatha point pannura pointer."),
             C("Browser → Context → Page"),
             Tip("`@playwright/test` use pannumbodhu, ovvoru test-ukkum browser, context, page-a adhuve create pannidum. Scripts-la mattum dhaan neenga kaiyaala pannuveenga."),
-            Warn("Playwright, Selenium-oda compatible illa. Ungal Java `WebDriver` code-a thirumba use panna mudiyaadhu; aana ideas (locators, waits, page objects) ellaam appadiye varum."),
+            Warn("Playwright, Selenium-oda compatible illa. Unga Java `WebDriver` code-a thirumba use panna mudiyaadhu; aana ideas (locators, waits, page objects) ellaam appadiye varum."),
         ),
         quiz = listOf(
             Quiz("BrowserContext edhu maadhiri?", listOf("Oru incognito profile", "Oru browser tab", "Oru Maven module"), 0, "Oru context-ukku thani cookies, storage irukku; mathha contexts-la irundhu pirichchu irukkum."),
@@ -35,7 +35,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
             P("Ovvoru Playwright test-um adhuvukkunnu thani fresh context-la odum. Test A-la login pannadhu test B-a paadhikkaadhu. Selenium-la cookies clear panna illana driver-a restart panna neenga gnabagam vechchukkanum."),
             H("Speed"),
             C("4 workers-la 100 tests-a parallel-a odudhal"),
-            P("Contexts romba cheap (milliseconds) matrum workers thani processes-nu irukkradhunaala, Selenium-la oru manineram eduththa suites perumbaalum sila nimishathula mudiyum."),
+            P("Contexts romba cheap (milliseconds) and workers thani processes-nu irukkradhunaala, Selenium-la oru manineram eduththa suites perumbaalum sila nimishathula mudiyum."),
             Table(
                 listOf("Feature", "Selenium ulagam", "Playwright"),
                 listOf(
@@ -101,10 +101,10 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
                     listOf("`unknown`", "safe-aana 'edhuvum'", "Object + cast"),
                 ),
             ),
-            H("Union types matrum null"),
+            H("Union types and null"),
             P("Oru variable pala types-la onnaa irukkalaam. `|` (pipe) use pannunga. 'Value illa onnum illa'nu solradhukku idhu romba common."),
             C("Unions"),
-            H("Equality matrum truthiness"),
+            H("Equality and truthiness"),
             C("Strict-a irunga"),
             Tip("TypeScript-a infer panna vidunga. `const url = 'https://x.com'` already `string`. Function parameters-ukkum, compiler guess panna mudiyaadha edathukkum mattum types add pannunga."),
             Warn("`const` objects-a freeze pannaadhu: `const user = {}; user.name = 'x'` work aagum. Variable-a vera onnukku point pannuradhai mattum thadukkum."),
@@ -116,7 +116,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
     ),
     "ts-functions" to ExtraTr(
         deep = listOf(
-            H("Optional matrum default parameters"),
+            H("Optional and default parameters"),
             C("Flexible parameters"),
             H("Functions-um values dhaan"),
             P("Java-la objects-a anuppuveenga. TypeScript-la oru function-a innoru function-ukkum anuppalaam. `test('name', async () => {...})` appadi dhaan work aagudhu: rendavadhu argument oru function; adhai Playwright apparam odum."),
@@ -128,7 +128,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
         ),
         quiz = listOf(
             Quiz("`wait(ms: number = 1000)` na enna?", listOf("ms-oda default 1000", "ms kandippa 1000", "ms oru optional text"), 0, "Call pannuravar argument tharalana default value use aagum."),
-            Quiz("`test('x', async () => {...})` yen work aagudhu?", listOf("Functions-a values-a pass pannalaam", "Magic", "Idhu Java feature"), 0, "Ungal function-a Playwright vaangi, thevai padumbodhu odum."),
+            Quiz("`test('x', async () => {...})` yen work aagudhu?", listOf("Functions-a values-a pass pannalaam", "Magic", "Idhu Java feature"), 0, "Unga function-a Playwright vaangi, thevai padumbodhu odum."),
         ),
     ),
     "ts-objects" to ExtraTr(
@@ -138,10 +138,10 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
             C("interface"),
             H("Useful array methods"),
             C("map, filter, find"),
-            H("Spread matrum optional chaining"),
-            C("... matrum ?."),
-            Tip("Config-la `...devices['Desktop Chrome']` paathirukkeenga. Adhu spread operator: settings-a ungal object-kulla copy pannudhu."),
-            Warn("Illaadha property-a padicha Java-oda NullPointerException maadhiri exception varaadhu; `undefined` kedaikkum. Bugs amaidhiya olinjirukkum; adhunaala ungal objects-ukku type kudunga."),
+            H("Spread and optional chaining"),
+            C("... and ?."),
+            Tip("Config-la `...devices['Desktop Chrome']` paathirukkeenga. Adhu spread operator: settings-a unga object-kulla copy pannudhu."),
+            Warn("Illaadha property-a padicha Java-oda NullPointerException maadhiri exception varaadhu; `undefined` kedaikkum. Bugs amaidhiya olinjirukkum; adhunaala unga objects-ukku type kudunga."),
         ),
         quiz = listOf(
             Quiz("`{ ...base, retries: 3 }` enna pannudhu?", listOf("base-a copy panni retries-a override pannudhu", "base-a delete pannudhu", "Error throw pannudhu"), 0, "Spread fields-a copy pannum; pinnaadi varra keys munnadi irukkuradhai override pannum."),
@@ -169,7 +169,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
     ),
     "ts-classes" to ExtraTr(
         deep = listOf(
-            H("Access modifiers matrum readonly"),
+            H("Access modifiers and readonly"),
             C("public / private / readonly"),
             H("Inheritance"),
             C("extends"),
@@ -204,7 +204,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
         ),
         quiz = listOf(
             Quiz("Edhu hook safe-a `page` tharum?", listOf("beforeAll", "beforeEach", "Rendum illa"), 1, "beforeEach ovvoru test-ukkum odum; angae ovvoru test-ukkum thani page irukku."),
-            Quiz("`test.fixme` enna pannum?", listOf("Theriyaadha bug irukkura test-a skip pannum", "Test-a fix pannum", "Rendu thadava odum"), 0, "Andha test-a 'theriyaadha problem'nu mark panni skip pannum."),
+            Quiz("`test.fixme` enna pannum?", listOf("Therinja bug irukkura test-a skip pannum", "Test-a fix pannum", "Rendu thadava odum"), 0, "Andha test-a 'therinja problem'nu mark panni skip pannum."),
         ),
     ),
     "run-tests" to ExtraTr(
@@ -226,7 +226,7 @@ val deepTgA: Map<String, ExtraTr> = mapOf(
             H("Line number vachchu oru test-a odudhal"),
             C("file:line"),
             H("VS Code extension"),
-            P("'Playwright Test for VS Code' extension ovvoru test pakkathulayum pachchai play button, Testing sidebar, 'Show browser' checkbox, 'Pick locator' tool-a add pannum. Ungal test-la breakpoints vachchu debug icon-a press pannunga."),
+            P("'Playwright Test for VS Code' extension ovvoru test pakkathulayum pachchai play button, Testing sidebar, 'Show browser' checkbox, 'Pick locator' tool-a add pannum. Unga test-la breakpoints vachchu debug icon-a press pannunga."),
             H("Fail aagura test-a debug pannuradhu"),
             C("Inspector"),
             Tip("Sandhegamaana test-la `--repeat-each=20 --workers=4` use panni, adhu unmaiyaave evlo flaky-nu kandupidinga."),
