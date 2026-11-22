@@ -84,6 +84,9 @@ private val langOptions = listOf(
     LangOption("Te", "Tenglish", "Telugu in English letters"),
 )
 
+private val mainLangs = listOf(0, 2, 4)   // English, Tanglish, Tenglish
+private val scriptLangs = listOf(1, 3)    // Tamil, Telugu
+
 /**
  * Start page: logo, app name and a language picker. Shown on first launch and
  * on demand from Settings. Always uses its own dark gradient, whatever the theme.
@@ -178,9 +181,28 @@ fun WelcomeScreen(store: ProgressStore, onStart: () -> Unit) {
                             modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                         )
                     }
-                    langOptions.forEachIndexed { i, opt ->
-                        Reveal(appeared, 4 + i) {
-                            LanguageCard(opt, selected = store.language == i) { store.chooseLanguage(i) }
+                    // Three main choices; Tamil and Telugu scripts sit in a small "Also in" line below.
+                    mainLangs.forEachIndexed { n, i ->
+                        Reveal(appeared, 4 + n) {
+                            LanguageCard(langOptions[i], selected = store.language == i) { store.chooseLanguage(i) }
+                        }
+                    }
+                    Reveal(appeared, 7) {
+                        Row(
+                            Modifier.fillMaxWidth().padding(top = 6.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            AnimatedLangText(store.language) {
+                                Text(
+                                    t("Also in", "இவற்றிலும்", "Ivatlayum irukku", "ఇవి కూడా", "Ivi kooda"),
+                                    color = Color.White.copy(alpha = 0.7f),
+                                    fontSize = 13.sp,
+                                )
+                            }
+                            scriptLangs.forEach { i ->
+                                MiniLanguageChip(langOptions[i].name, selected = store.language == i) { store.chooseLanguage(i) }
+                            }
                         }
                     }
                     AnimatedLangText(store.language) {
@@ -330,6 +352,30 @@ private fun LanguageCard(opt: LangOption, selected: Boolean, onClick: () -> Unit
         ) {
             Icon(Icons.Default.Check, contentDescription = null, tint = Navy, modifier = Modifier.size(18.dp))
         }
+    }
+}
+
+/** Small pill for the secondary languages (Tamil, Telugu). Gold with a tick when selected. */
+@Composable
+private fun MiniLanguageChip(name: String, selected: Boolean, onClick: () -> Unit) {
+    val bg by animateColorAsState(if (selected) Gold else Color.White.copy(alpha = 0.07f), tween(200), label = "miniBg")
+    val fg by animateColorAsState(if (selected) Navy else Color.White, tween(200), label = "miniFg")
+    val border by animateColorAsState(if (selected) Gold else Color.White.copy(alpha = 0.18f), tween(200), label = "miniBorder")
+    val shape = RoundedCornerShape(50)
+    Row(
+        Modifier
+            .clip(shape)
+            .background(bg)
+            .border(1.dp, border, shape)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (selected) {
+            Icon(Icons.Default.Check, contentDescription = null, tint = fg, modifier = Modifier.size(14.dp))
+            Spacer(Modifier.size(4.dp))
+        }
+        Text(name, color = fg, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
     }
 }
 
