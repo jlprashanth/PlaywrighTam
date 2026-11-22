@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 18 72 72">
+  <rect width="108" height="108" fill="#1A73E8"/>
+  <!-- Converted from app/src/main/res/drawable/ic_launcher_foreground.xml -->
+  <g transform="translate(54 54) scale(.85) translate(-54 -54)">
+    <!-- back mask: tragedy -->
+    <g transform="translate(50 26) translate(16 19) rotate(14) translate(-16 -19)">
+      <path fill="#FFFFFF" d="M0,4 Q16,-2 32,4 L32,18 C32,30 24,38 16,38 C8,38 0,30 0,18 Z"/>
+      <path fill="#1A73E8" d="M9,15 a3.5,2.2 0 1,0 7,0 a3.5,2.2 0 1,0 -7,0 Z"/>
+      <path fill="#1A73E8" d="M19,15 a3.5,2.2 0 1,0 7,0 a3.5,2.2 0 1,0 -7,0 Z"/>
+      <path fill="none" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" d="M9,30 Q16,23 23,30"/>
+    </g>
+    <!-- front mask: comedy -->
+    <g transform="translate(24 42) translate(16 19) rotate(-12) translate(-16 -19)">
+      <path fill="#FBBC04" stroke="#1A73E8" stroke-width="1.5" d="M0,4 Q16,-2 32,4 L32,18 C32,30 24,38 16,38 C8,38 0,30 0,18 Z"/>
+      <path fill="#1A73E8" d="M9,15 a3.5,2.2 0 1,0 7,0 a3.5,2.2 0 1,0 -7,0 Z"/>
+      <path fill="#1A73E8" d="M19,15 a3.5,2.2 0 1,0 7,0 a3.5,2.2 0 1,0 -7,0 Z"/>
+      <path fill="none" stroke="#1A73E8" stroke-width="2" stroke-linecap="round" d="M8,24 Q16,34 24,24"/>
+    </g>
+  </g>
+</svg>

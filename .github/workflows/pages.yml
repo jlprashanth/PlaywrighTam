@@ -1,0 +1,42 @@
+# Publishes the web (PWA) version in web/ to GitHub Pages on every push to main that touches it.
+# One-time setup: repo Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Deploy web app to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['web/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Stamp the build id into the service worker (refreshes offline caches on each deploy)
+        run: sed -i "s/__BUILD__/${GITHUB_SHA::7}/" web/sw.js
+
+      - name: Leave developer scripts out of the site
+        run: rm -rf web/tools
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: web
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

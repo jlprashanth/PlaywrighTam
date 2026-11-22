@@ -27,6 +27,12 @@ An offline Android app that teaches **TypeScript + Playwright** to people who al
 - **Light, dark or system theme**, with edge-to-edge Material 3 design.
 - **Works fully offline.** No account, no network access, no ads.
 
+## Web version (iPhone, iPad, any browser)
+
+The same course is also available as an installable web app: **https://jlprashanth.github.io/PlaywrighTam/**
+
+On iPhone, open it in Safari, tap **Share → Add to Home Screen**, and it runs full-screen and offline like a normal app. See [`web/README.md`](web/README.md) for how it's built and deployed.
+
 ## Course outline
 
 | # | Module | What you learn |
@@ -86,6 +92,7 @@ Or open the project in Android Studio and press **Run**.
 1. Add the English lesson in `data/Content*.kt` or `data/NewLessons.kt`, and a deep dive in `data/Deep*.kt`.
 2. Add its translations for all four languages: the lesson text in `Translations*.kt`, and the deep dive and extra quizzes in `DeepTrT*.kt`.
 3. Run `./gradlew :app:testDebugUnitTest`. `TranslationCoverageTest` fails if any lesson, module, challenge, deep dive or extra quiz is missing in a language, or if a translated deep dive doesn't match the English structure (block order, table shape, quiz options and answers).
+4. Run `sh web/tools/export-content.sh` to refresh the web version's lesson data (`web/data/*.json`), and commit it along with your change.
 
 In translated deep dives, write code blocks as `C("translated title")`. The code and its language are copied from the English original, so code can never drift between languages.
 
