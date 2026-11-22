@@ -17,6 +17,8 @@
     { glyph: 'అ', name: 'తెలుగు', sub: 'Telugu' },
     { glyph: 'Te', name: 'Tenglish', sub: 'Telugu in English letters' },
   ];
+  const MAIN_LANGS = [0, 2, 4];   // big cards on the start page: English, Tanglish, Tenglish
+  const SCRIPT_LANGS = [1, 3];    // small "Also in" links: Tamil, Telugu
   // Same order as `accents` in Components.kt.
   const ACCENTS = ['#1A73E8', '#EA4335', '#1E8E3E', '#F9AB00', '#9334E6', '#129EAF', '#E8710A', '#D01884'];
 
@@ -652,14 +654,20 @@
     const existing = app.querySelector('.welcome');
     if (existing && ui.current === 'welcome') { updateWelcomeText(true); return; }
 
-    const cards = LANG_OPTIONS.map((o, i) => `
-      <div class="reveal" style="--i:${4 + i}">
+    // Three main choices (English, Tanglish, Tenglish); Tamil and Telugu scripts are offered in a small line below.
+    const cards = MAIN_LANGS.map((i, n) => {
+      const o = LANG_OPTIONS[i];
+      return `
+      <div class="reveal" style="--i:${4 + n}">
         <button class="lang-card ${store.lang === i ? 'selected' : ''}" data-action="welcome-lang" data-v="${i}" aria-pressed="${store.lang === i}">
           <span class="lang-glyph">${esc(o.glyph)}</span>
           <span class="lang-text"><span class="n" style="display:block">${esc(o.name)}</span><span class="s" style="display:block">${esc(o.sub)}</span></span>
           <span class="lang-check">${icon('check', 'icon-18')}</span>
         </button>
-      </div>`).join('');
+      </div>`;
+    }).join('');
+    const minis = SCRIPT_LANGS.map((i) =>
+      `<button class="lang-mini ${store.lang === i ? 'selected' : ''}" data-action="welcome-lang" data-v="${i}" aria-pressed="${store.lang === i}" lang="${HTML_LANG[i]}">${icon('check', 'icon-14')}${esc(LANG_OPTIONS[i].name)}</button>`).join('');
 
     app.innerHTML = `
       <div class="welcome">
@@ -679,8 +687,9 @@
           <div class="reveal" style="--i:2"><p class="tagline" data-w="tagline" style="margin-bottom:0"></p></div>
           <div class="lang-list">
             <div class="reveal" style="--i:3"><h1 class="lang-heading" data-w="choose" style="margin:0"></h1></div>
-            <div class="stack gap-10" role="radiogroup" aria-label="Language">${cards}</div>
-            <div class="reveal" style="--i:9"><p class="lang-note" data-w="note" style="margin:0"></p></div>
+            <div class="stack gap-10" role="group" aria-label="Language">${cards}</div>
+            <div class="reveal" style="--i:7"><div class="lang-also"><span data-w="also"></span>${minis}</div></div>
+            <div class="reveal" style="--i:8"><p class="lang-note" data-w="note" style="margin:0"></p></div>
           </div>
         </div>
         <div class="welcome-foot">
@@ -702,6 +711,7 @@
         'Selenium telisina vallaki TypeScript + Playwright, simple ga.',
       ),
       choose: t('Choose your language', 'உங்கள் மொழியைத் தேர்ந்தெடுங்கள்', 'Unga language-a choose pannunga', 'మీ భాషను ఎంచుకోండి', 'Mee bhaashanu enchukondi'),
+      also: t('Also in', 'இவற்றிலும்', 'Ivatlayum irukku', 'ఇవి కూడా', 'Ivi kooda'),
       note: t('You can change this any time in Settings.', 'இதை எப்போது வேண்டுமானாலும் அமைப்புகளில் மாற்றலாம்.', 'Ithai eppo venaalum Settings-la maathalaam.', 'దీన్ని ఎప్పుడైనా సెట్టింగ్స్‌లో మార్చుకోవచ్చు.', 'Deenni eppudainaa Settings lo maarchukovachu.'),
       start: t("Let's start", 'தொடங்குவோம்', 'Start pannalaam', 'మొదలుపెడదాం', 'Modalupedadaam'),
     };
@@ -711,7 +721,7 @@
       el.textContent = texts[k];
       if (animate) { el.classList.remove('lang-fade'); void el.offsetWidth; el.classList.add('lang-fade'); }
     });
-    app.querySelectorAll('.lang-card').forEach((card) => {
+    app.querySelectorAll('.lang-card, .lang-mini').forEach((card) => {
       const on = Number(card.getAttribute('data-v')) === store.lang;
       card.classList.toggle('selected', on);
       card.setAttribute('aria-pressed', String(on));

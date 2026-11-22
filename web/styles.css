@@ -421,6 +421,34 @@ img { display: block; }
 }
 .lang-card.selected .lang-check { opacity: 1; transform: none; }
 
+.lang-also {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px;
+  padding-top: 6px; font-size: 13px; line-height: 18px; color: rgba(255, 255, 255, .7);
+}
+.lang-also > span { margin-right: 2px; }
+.lang-mini {
+  display: inline-flex; align-items: center; gap: 0;
+  padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  font-size: 14px; line-height: 20px; font-weight: 600; color: #fff;
+  background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .18);
+  transition: background-color .2s, color .2s, border-color .2s, gap .2s;
+}
+.lang-mini:hover { background: rgba(255, 255, 255, .14); }
+.lang-mini:focus-visible { outline: 2px solid #FBBC04; outline-offset: 2px; }
+.lang-mini .icon-14 { width: 0; height: 14px; opacity: 0; transition: width .2s, opacity .2s; }
+.lang-mini.selected { background: #FBBC04; border-color: #FBBC04; color: #0B1437; gap: 4px; padding-left: 8px; }
+.lang-mini.selected .icon-14 { width: 14px; opacity: 1; }
+
+/* Short phones (e.g. iPhone SE): shrink the hero so all language options fit above the Start button. */
+@media (max-height: 740px) {
+  .logo-wrap { zoom: .7; margin-top: 0; }
+  .brand { margin-top: 2px; }
+  .brand .name { font-size: 32px; line-height: 38px; }
+  .tagline { margin-top: 8px; }
+  .lang-list { margin-top: 14px; }
+  .welcome-foot { padding-bottom: 12px; }
+}
+
 .start-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-width: 240px; padding: 16px 32px; border-radius: 999px; border: none; cursor: pointer;
